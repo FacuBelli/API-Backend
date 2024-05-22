@@ -7,10 +7,14 @@ import java.util.Optional;
 
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
 
 import com.example.uade.tpo.ecommerce.entity.Category;
 import com.example.uade.tpo.ecommerce.exceptions.CategoryDuplicateException;
 import com.example.uade.tpo.ecommerce.repository.CategoryRepository;
+
+
+@Service
 
 public class CategoryServiceImpl implements CategoryService {
 

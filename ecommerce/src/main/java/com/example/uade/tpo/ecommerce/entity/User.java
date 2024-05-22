@@ -30,6 +30,6 @@ public class User {
     private String name;
 
 
-    @OneToMany(mappedBy = "users")
+    @OneToMany(mappedBy = "user")
     private List<Order> orders;
 }

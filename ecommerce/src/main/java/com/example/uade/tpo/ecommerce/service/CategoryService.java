@@ -3,6 +3,8 @@ package com.example.uade.tpo.ecommerce.service;
 import java.util.List;
 import java.util.Optional;
 
+import org.springframework.stereotype.Service;
+
 import com.example.uade.tpo.ecommerce.entity.Category;
 import com.example.uade.tpo.ecommerce.exceptions.CategoryDuplicateException;
 
