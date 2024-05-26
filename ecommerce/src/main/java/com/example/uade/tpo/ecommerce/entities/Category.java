@@ -1,4 +1,4 @@
-package com.example.uade.tpo.ecommerce.entity;
+package com.example.uade.tpo.ecommerce.entities;
 
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
