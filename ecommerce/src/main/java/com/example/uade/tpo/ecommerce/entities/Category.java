@@ -11,6 +11,9 @@ import lombok.Data;
 @Entity //esto dice que esta clase es una entidad eprsistida en una DDBB
 
 public class Category {
+    public Category() {
+    }
+    
     public Category(String description){
         this.description = description;
     }
