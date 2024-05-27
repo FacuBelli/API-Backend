@@ -30,10 +30,10 @@ public class CategoryServiceImpl implements CategoryService {
         return categoryRepository.findById(categoryId);
     }
 
-    public Category createCategory(String description) throws CategoryDuplicateException {
-        List<Category> categories = categoryRepository.findByDescription(description);
+    public Category createCategory(String name) throws CategoryDuplicateException {
+        List<Category> categories = categoryRepository.findByDescription(name);
         if (categories.isEmpty())
-        return categoryRepository.save(new Category(description));
+        return categoryRepository.save(new Category(name));
                 
         throw new CategoryDuplicateException();
         

@@ -11,7 +11,7 @@ import java.util.List;
 
 @Repository
 public interface CategoryRepository extends JpaRepository <Category, Long>{
-    @Query(value = "select c from Category c where c.description = ?1")//Se puede escribir en SQL o JPA
+    @Query(value = "select c from Category c where c.name = ?1")//Se puede escribir en SQL o JPA
     List<Category>findByDescription(String description);
     
 }

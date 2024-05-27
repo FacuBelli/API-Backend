@@ -1,35 +1,56 @@
 package com.example.uade.tpo.ecommerce.entities;
 
-import java.util.List;
+import java.util.Set;
 
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
+import jakarta.persistence.JoinColumn;
+import jakarta.persistence.JoinTable;
+import jakarta.persistence.ManyToMany;
 import jakarta.persistence.OneToMany;
+import jakarta.persistence.Table;
 import lombok.Data;
 
 @Entity
 @Data
-
+@Table(name = "users")
 public class User {
-    
-
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
     @Column
-    private String username;
+    private String biography;
 
     @Column
     private String email;
 
     @Column
-    private String name;
+    private String password;
 
+    @Column
+    private String first_name;
 
-    @OneToMany(mappedBy = "user")
-    private List<Order> orders;
+    @Column
+    private String last_name;
+
+    @Column
+    private boolean is_artist;
+
+    @OneToMany(mappedBy = "artist")
+    private Set<Artwork> artworks;
+
+    @ManyToMany
+    @JoinTable(inverseJoinColumns = { @JoinColumn(name = "bought_artwork_id") })
+    private Set<Artwork> bought_artworks;
+
+    @ManyToMany
+    @JoinTable(inverseJoinColumns = { @JoinColumn(name = "favorite_artwork_id") })
+    private Set<Artwork> favorite_artworks;
+
+    @OneToMany
+    private Set<CartItem> cart;
 }

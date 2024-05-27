@@ -31,9 +31,6 @@ import org.springframework.web.bind.annotation.RequestBody;
 @RequestMapping("categories") 
 
 
-
-
-
 public class CategoryController {
 
     @Autowired //Averiguar que hace esto
@@ -56,7 +53,7 @@ public class CategoryController {
     @PostMapping
     public ResponseEntity<Object> createCategory(@RequestBody Category categoryRequest)
             throws CategoryDuplicateException {
-        Category result = categoryService.createCategory(categoryRequest.getDescription());
+        Category result = categoryService.createCategory(categoryRequest.getName());
         return ResponseEntity.created(URI.create("/categories/" + result.getId())).body(result);
     }
     

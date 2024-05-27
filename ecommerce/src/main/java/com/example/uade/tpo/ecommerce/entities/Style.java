@@ -9,15 +9,11 @@ import lombok.Data;
 
 @Entity
 @Data
+public class Style {
+  @Id
+  @GeneratedValue(strategy = GenerationType.IDENTITY)
+  private Long id;
 
-public class Role {
-
-    @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long id;
-
-    @Column
-    private String Description;
-    
-    
+  @Column
+  private String name;
 }
