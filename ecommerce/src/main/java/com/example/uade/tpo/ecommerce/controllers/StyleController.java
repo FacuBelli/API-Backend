@@ -13,6 +13,7 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
+import com.example.uade.tpo.ecommerce.dto.StyleBody;
 import com.example.uade.tpo.ecommerce.entities.Style;
 import com.example.uade.tpo.ecommerce.exceptions.DuplicateException;
 import com.example.uade.tpo.ecommerce.services.StyleService;
@@ -37,8 +38,8 @@ public class StyleController {
   }
 
   @PostMapping
-  public ResponseEntity<Object> createStyle(@RequestBody Style styleRequest) throws DuplicateException {
-    Style result = styleService.createStyle(styleRequest.getName());
+  public ResponseEntity<Object> createStyle(@RequestBody StyleBody styleRequest) throws DuplicateException {
+    Style result = styleService.createStyle(styleRequest);
     return ResponseEntity.created(URI.create("/style/" + result.getId())).body(result);
   }
 }

@@ -13,6 +13,7 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
+import com.example.uade.tpo.ecommerce.dto.OrientationBody;
 import com.example.uade.tpo.ecommerce.entities.Orientation;
 import com.example.uade.tpo.ecommerce.exceptions.DuplicateException;
 import com.example.uade.tpo.ecommerce.services.OrientationService;
@@ -37,9 +38,9 @@ public class OrientationController {
   }
 
   @PostMapping
-  public ResponseEntity<Object> createOrientation(@RequestBody Orientation orientationRequest)
+  public ResponseEntity<Object> createOrientation(@RequestBody OrientationBody orientationRequest)
       throws DuplicateException {
-    Orientation result = orientationService.createOrientation(orientationRequest.getName());
+    Orientation result = orientationService.createOrientation(orientationRequest);
     return ResponseEntity.created(URI.create("/orientation/" + result.getId())).body(result);
   }
 }

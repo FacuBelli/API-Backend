@@ -1,5 +1,7 @@
 package com.example.uade.tpo.ecommerce.entities;
 
+import com.example.uade.tpo.ecommerce.dto.StyleBody;
+
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
@@ -20,7 +22,7 @@ public class Style {
   public Style() {
   }
 
-  public Style(String name) {
-    this.name = name;
+  public Style(StyleBody body) {
+    this.name = body.getName();
   }
 }
