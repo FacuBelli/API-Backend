@@ -11,6 +11,7 @@ import jakarta.persistence.Id;
 import jakarta.persistence.JoinColumn;
 import jakarta.persistence.JoinTable;
 import jakarta.persistence.ManyToMany;
+import jakarta.persistence.ManyToOne;
 import jakarta.persistence.OneToOne;
 import lombok.Builder;
 import lombok.Data;
@@ -49,12 +50,15 @@ public class Artwork {
   @Column
   private boolean hidden;
 
-  // @Column
-  // private Orientation orientation;
+  @ManyToMany
+  @JoinTable
+  private Set<Orientation> orientations;
 
-  // @Column
-  // private Set<Style> styles;
+  @ManyToMany
+  @JoinTable
+  private Set<Style> styles;
 
-  // @Column
-  // private Set<Theme> themes;
+  @ManyToMany
+  @JoinTable
+  private Set<Theme> themes;
 }
