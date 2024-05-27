@@ -16,4 +16,11 @@ public class Theme {
 
   @Column
   private String name;
+
+  public Theme() {
+  }
+
+  public Theme(String name) {
+    this.name = name;
+  }
 }

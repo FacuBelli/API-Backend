@@ -16,4 +16,11 @@ public class Style {
 
   @Column
   private String name;
+
+  public Style() {
+  }
+
+  public Style(String name) {
+    this.name = name;
+  }
 }

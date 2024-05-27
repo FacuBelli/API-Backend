@@ -10,17 +10,17 @@ import lombok.Data;
 @Entity
 @Data
 public class Category {
-    public Category() {
-    }
+  @Id
+  @GeneratedValue(strategy = GenerationType.IDENTITY)
+  private Long id;
 
-    public Category(String name) {
-        this.name = name;
-    }
+  @Column
+  private String name;
 
-    @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long id;
+  public Category() {
+  }
 
-    @Column
-    private String name;
+  public Category(String name) {
+    this.name = name;
+  }
 }

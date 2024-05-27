@@ -16,4 +16,11 @@ public class Orientation {
 
   @Column
   private String name;
+
+  public Orientation() {
+  }
+
+  public Orientation(String name) {
+    this.name = name;
+  }
 }
