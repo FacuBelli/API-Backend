@@ -3,6 +3,7 @@ package com.example.uade.tpo.ecommerce.services;
 import java.util.List;
 import java.util.Optional;
 
+import com.example.uade.tpo.ecommerce.dto.CategoryBody;
 import com.example.uade.tpo.ecommerce.entities.Category;
 import com.example.uade.tpo.ecommerce.exceptions.DuplicateException;
 
@@ -11,5 +12,5 @@ public interface CategoryService {
 
   public Optional<Category> getCategoryById(Long id);
 
-  public Category createCategory(String name) throws DuplicateException;
+  public Category createCategory(CategoryBody body) throws DuplicateException;
 }

@@ -1,5 +1,7 @@
 package com.example.uade.tpo.ecommerce.entities;
 
+import com.example.uade.tpo.ecommerce.dto.OrientationBody;
+
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
@@ -20,7 +22,7 @@ public class Orientation {
   public Orientation() {
   }
 
-  public Orientation(String name) {
-    this.name = name;
+  public Orientation(OrientationBody body) {
+    this.name = body.getName();
   }
 }

@@ -13,33 +13,34 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
-import com.example.uade.tpo.ecommerce.dto.StyleBody;
-import com.example.uade.tpo.ecommerce.entities.Style;
+import com.example.uade.tpo.ecommerce.dto.ArtworkBody;
+import com.example.uade.tpo.ecommerce.entities.Artwork;
 import com.example.uade.tpo.ecommerce.exceptions.DuplicateException;
-import com.example.uade.tpo.ecommerce.services.StyleService;
+import com.example.uade.tpo.ecommerce.services.ArtworkService;
 
 @RestController
-@RequestMapping("style")
-public class StyleController {
+@RequestMapping("artwork")
+public class ArtworkController {
   @Autowired
-  private StyleService styleService;
+  private ArtworkService artworkService;
 
   @GetMapping
-  public ResponseEntity<List<Style>> getStyles() {
-    return ResponseEntity.ok(styleService.getStyles());
+  public ResponseEntity<List<Artwork>> getCategories() {
+    return ResponseEntity.ok(artworkService.getArtworks());
   }
 
-  @GetMapping("/{styleId}")
-  public ResponseEntity<Style> getCategoryById(@PathVariable Long styleId) {
-    Optional<Style> result = styleService.getStyleById(styleId);
+  @GetMapping("/{artworkId}")
+  public ResponseEntity<Artwork> getArtworkById(@PathVariable Long artworkId) {
+    Optional<Artwork> result = artworkService.getArtworkById(artworkId);
     if (result.isPresent())
       return ResponseEntity.ok(result.get());
     return ResponseEntity.noContent().build();
   }
 
   @PostMapping
-  public ResponseEntity<Object> createStyle(@RequestBody StyleBody styleRequest) throws DuplicateException {
-    Style result = styleService.createStyle(styleRequest);
-    return ResponseEntity.created(URI.create("/style/" + result.getId())).body(result);
+  public ResponseEntity<Object> createCategory(@RequestBody ArtworkBody artworkRequest)
+      throws DuplicateException {
+        Artwork result = artworkService.createArtwork(artworkRequest);
+    return ResponseEntity.created(URI.create("/artwork/" + result.getId())).body(result);
   }
 }
