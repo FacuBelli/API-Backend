@@ -6,7 +6,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.example.uade.tpo.ecommerce.entities.Category;
-import com.example.uade.tpo.ecommerce.exceptions.CategoryDuplicateException;
+import com.example.uade.tpo.ecommerce.exceptions.DuplicateException;
 import com.example.uade.tpo.ecommerce.services.CategoryService;
 
 import java.net.URI;
@@ -20,42 +20,32 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 
-
-
-
 //Con esto declaro que esta clase es un endpoint HTTP
-@RestController 
-
-
-// Esto me define que url tiene que apuntar, a cada url que empiece con categoires, me trae todo lo que tiene ahi
-@RequestMapping("categories") 
-
-
+@RestController
+// Esto me define que url tiene que apuntar, a cada url que empiece con
+// categories, me trae todo lo que tiene ahi
+@RequestMapping("category")
 public class CategoryController {
+  @Autowired // Averiguar que hace esto
+  private CategoryService categoryService;
 
-    @Autowired //Averiguar que hace esto
-    private CategoryService categoryService;
+  @GetMapping
+  public ResponseEntity<List<Category>> getCategories() {
+    return ResponseEntity.ok(categoryService.getCategories());
+  }
 
-    @GetMapping
-    public ResponseEntity<List<Category>> getCategories() {
-        return ResponseEntity.ok(categoryService.getCategories());
-    }
+  @GetMapping("/{categoryId}")
+  public ResponseEntity<Category> getCategoryById(@PathVariable Long categoryId) {
+    Optional<Category> result = categoryService.getCategoryById(categoryId);
+    if (result.isPresent())
+      return ResponseEntity.ok(result.get());
+    return ResponseEntity.noContent().build();
+  }
 
-     @GetMapping("/{categoryId}")
-    public ResponseEntity<Category> getCategoryById(@PathVariable Long categoryId) {
-        Optional<Category> result = categoryService.getCategoryById(categoryId);
-        if (result.isPresent())
-            return ResponseEntity.ok(result.get());
-
-        return ResponseEntity.noContent().build();
-    }
-
-    @PostMapping
-    public ResponseEntity<Object> createCategory(@RequestBody Category categoryRequest)
-            throws CategoryDuplicateException {
-        Category result = categoryService.createCategory(categoryRequest.getName());
-        return ResponseEntity.created(URI.create("/categories/" + result.getId())).body(result);
-    }
-    
-    
+  @PostMapping
+  public ResponseEntity<Object> createCategory(@RequestBody Category categoryRequest)
+      throws DuplicateException {
+    Category result = categoryService.createCategory(categoryRequest.getName());
+    return ResponseEntity.created(URI.create("/category/" + result.getId())).body(result);
+  }
 }

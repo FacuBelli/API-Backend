@@ -4,12 +4,12 @@ import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.stereotype.Repository;
 
-import com.example.uade.tpo.ecommerce.entities.Category;
+import com.example.uade.tpo.ecommerce.entities.Orientation;
 
 import java.util.List;
 
 @Repository
-public interface CategoryRepository extends JpaRepository<Category, Long> {
-  @Query(value = "select c from Category c where c.name = ?1")
-  public List<Category> findByName(String name);
+public interface OrientationRepository extends JpaRepository<Orientation, Long> {
+  @Query(value = "select o from Orientation o where o.name = ?1")
+  public List<Orientation> findByName(String name);
 }
