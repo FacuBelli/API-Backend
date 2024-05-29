@@ -26,12 +26,12 @@ public class StyleServiceImpl implements StyleService {
   }
 
   public Optional<Style> getStyleByName(String name) {
-    return Optional.ofNullable(styleRepository.findByName(name).getFirst());
+    return styleRepository.findByName(name);
   }  
 
   public Style createStyle(StyleBody body) throws DuplicateException {
-    List<Style> styles = styleRepository.findByName(body.getName());
-    if (!styles.isEmpty())
+    Optional<Style> style = styleRepository.findByName(body.getName());
+    if (style.isPresent())
       throw new DuplicateException("El Style ya existe.");
     return styleRepository.save(new Style(body));
   }

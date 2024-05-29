@@ -26,12 +26,12 @@ public class CategoryServiceImpl implements CategoryService {
   }
 
   public Optional<Category> getCategoryByName(String name) {
-    return Optional.ofNullable(categoryRepository.findByName(name).getFirst());
+    return categoryRepository.findByName(name);
   }
 
   public Category createCategory(CategoryBody body) throws DuplicateException {
-    List<Category> categories = categoryRepository.findByName(body.getName());
-    if (!categories.isEmpty())
+    Optional<Category> category = categoryRepository.findByName(body.getName());
+    if (category.isPresent())
       throw new DuplicateException("La Category ya existe.");
     return categoryRepository.save(new Category(body));
   }

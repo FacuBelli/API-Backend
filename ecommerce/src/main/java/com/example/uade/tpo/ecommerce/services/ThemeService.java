@@ -12,5 +12,7 @@ public interface ThemeService {
 
   public Optional<Theme> getThemeById(Long id);
 
+  public Optional<Theme> getThemeByName(String name);
+
   public Theme createTheme(ThemeBody body) throws DuplicateException;
 }
