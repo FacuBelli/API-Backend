@@ -6,7 +6,7 @@ import java.util.Optional;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import com.example.uade.tpo.ecommerce.dto.CategoryBody;
+import com.example.uade.tpo.ecommerce.dto.body.CategoryBody;
 import com.example.uade.tpo.ecommerce.entities.Category;
 import com.example.uade.tpo.ecommerce.exceptions.DuplicateException;
 import com.example.uade.tpo.ecommerce.repositories.CategoryRepository;
@@ -23,6 +23,10 @@ public class CategoryServiceImpl implements CategoryService {
 
   public Optional<Category> getCategoryById(Long id) {
     return categoryRepository.findById(id);
+  }
+
+  public Optional<Category> getCategoryByName(String name) {
+    return Optional.ofNullable(categoryRepository.findByName(name).getFirst());
   }
 
   public Category createCategory(CategoryBody body) throws DuplicateException {

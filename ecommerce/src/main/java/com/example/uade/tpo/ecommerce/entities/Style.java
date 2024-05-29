@@ -1,6 +1,6 @@
 package com.example.uade.tpo.ecommerce.entities;
 
-import com.example.uade.tpo.ecommerce.dto.StyleBody;
+import com.example.uade.tpo.ecommerce.dto.body.StyleBody;
 
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;

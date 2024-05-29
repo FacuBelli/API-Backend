@@ -6,7 +6,7 @@ import java.util.Optional;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import com.example.uade.tpo.ecommerce.dto.StyleBody;
+import com.example.uade.tpo.ecommerce.dto.body.StyleBody;
 import com.example.uade.tpo.ecommerce.entities.Style;
 import com.example.uade.tpo.ecommerce.exceptions.DuplicateException;
 import com.example.uade.tpo.ecommerce.repositories.StyleRepository;
@@ -24,6 +24,10 @@ public class StyleServiceImpl implements StyleService {
   public Optional<Style> getStyleById(Long id) {
     return styleRepository.findById(id);
   }
+
+  public Optional<Style> getStyleByName(String name) {
+    return Optional.ofNullable(styleRepository.findByName(name).getFirst());
+  }  
 
   public Style createStyle(StyleBody body) throws DuplicateException {
     List<Style> styles = styleRepository.findByName(body.getName());
