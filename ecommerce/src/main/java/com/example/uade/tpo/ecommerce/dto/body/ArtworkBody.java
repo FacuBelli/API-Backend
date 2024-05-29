@@ -1,4 +1,4 @@
-package com.example.uade.tpo.ecommerce.dto;
+package com.example.uade.tpo.ecommerce.dto.body;
 
 import java.sql.Blob;
 import java.util.Set;
@@ -9,9 +9,11 @@ import com.example.uade.tpo.ecommerce.entities.Style;
 import com.example.uade.tpo.ecommerce.entities.Theme;
 import com.example.uade.tpo.ecommerce.entities.User;
 
+import lombok.Builder;
 import lombok.Data;
 
 @Data
+@Builder
 public class ArtworkBody {
   private User artist;
 
@@ -33,5 +35,5 @@ public class ArtworkBody {
 
   private Set<Theme> themes;
 
-  private Set<Orientation> orientations;
+  private Orientation orientation;
 }

@@ -3,7 +3,7 @@ package com.example.uade.tpo.ecommerce.entities;
 import java.sql.Blob;
 import java.util.Set;
 
-import com.example.uade.tpo.ecommerce.dto.ArtworkBody;
+import com.example.uade.tpo.ecommerce.dto.body.ArtworkBody;
 
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
@@ -13,6 +13,7 @@ import jakarta.persistence.Id;
 import jakarta.persistence.JoinColumn;
 import jakarta.persistence.JoinTable;
 import jakarta.persistence.ManyToMany;
+import jakarta.persistence.ManyToOne;
 import jakarta.persistence.OneToOne;
 import lombok.Data;
 
@@ -57,9 +58,9 @@ public class Artwork {
   @JoinTable
   private Set<Theme> themes;
 
-  @ManyToMany
-  @JoinTable
-  private Set<Orientation> orientations;
+  @ManyToOne
+  @JoinColumn(name = "orientation_id", referencedColumnName = "id")
+  private Orientation orientation;
 
   public Artwork() {
   }
@@ -75,6 +76,6 @@ public class Artwork {
     this.categories = body.getCategories();
     this.styles = body.getStyles();
     this.themes = body.getThemes();
-    this.orientations = body.getOrientations();
+    this.orientation = body.getOrientation();
   }
 }
