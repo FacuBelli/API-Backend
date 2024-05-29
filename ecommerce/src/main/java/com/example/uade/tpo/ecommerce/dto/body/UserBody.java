@@ -1,4 +1,4 @@
-package com.example.uade.tpo.ecommerce.dto;
+package com.example.uade.tpo.ecommerce.dto.body;
 
 
 import lombok.Data;
@@ -9,7 +9,7 @@ public class UserBody {
     private String biography;
     private String email;
     private String password;
-    private String first_name;
-    private String last_name;
-    private boolean is_artist;
+    private String firstName;
+    private String lastName;
+    private boolean isArtist;
 }

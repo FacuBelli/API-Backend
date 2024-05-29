@@ -13,7 +13,7 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
-import com.example.uade.tpo.ecommerce.dto.UserBody;
+import com.example.uade.tpo.ecommerce.dto.body.UserBody;
 import com.example.uade.tpo.ecommerce.entities.User;
 import com.example.uade.tpo.ecommerce.exceptions.DuplicateException;
 import com.example.uade.tpo.ecommerce.services.UserService;
@@ -39,9 +39,9 @@ public class UserController {
     }
   
     @PostMapping
-    public ResponseEntity<Object> createTheme(@RequestBody ThemeBody themeRequest)
+    public ResponseEntity<Object> createUser(@RequestBody UserBody userRequest)
         throws DuplicateException {
-          Theme result = themeService.createTheme(themeRequest);
-      return ResponseEntity.created(URI.create("/theme/" + result.getId())).body(result);
+          User result = userService.createUser(userRequest);
+      return ResponseEntity.created(URI.create("/user/" + result.getId())).body(result);
     }
 }

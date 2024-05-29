@@ -3,8 +3,7 @@ package com.example.uade.tpo.ecommerce.services;
 import java.util.List;
 import java.util.Optional;
 
-
-import com.example.uade.tpo.ecommerce.dto.UserBody;
+import com.example.uade.tpo.ecommerce.dto.body.UserBody;
 import com.example.uade.tpo.ecommerce.entities.User;
 import com.example.uade.tpo.ecommerce.exceptions.DuplicateException;
 
