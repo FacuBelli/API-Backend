@@ -27,8 +27,10 @@ import com.example.uade.tpo.ecommerce.exceptions.DuplicateException;
 import com.example.uade.tpo.ecommerce.exceptions.NotFoundException;
 import com.example.uade.tpo.ecommerce.services.ArtworkService;
 import com.example.uade.tpo.ecommerce.services.CategoryService;
+import com.example.uade.tpo.ecommerce.services.UserService;
 import com.example.uade.tpo.ecommerce.services.OrientationService;
 import com.example.uade.tpo.ecommerce.services.StyleService;
+import com.example.uade.tpo.ecommerce.services.ThemeService;
 
 @RestController
 @RequestMapping("artwork")
@@ -39,8 +41,8 @@ public class ArtworkController {
   @Autowired
   private CategoryService categoryService;
 
-  // @Autowired
-  // private UserService UserService;
+  @Autowired
+  private UserService userService;
 
   @Autowired
   private OrientationService orientationService;
@@ -48,8 +50,8 @@ public class ArtworkController {
   @Autowired
   private StyleService styleService;
 
-  // @Autowired
-  // private ThemeService themeService;
+  @Autowired
+  private ThemeService themeService;
 
   @GetMapping
   public ResponseEntity<List<Artwork>> getCategories() {
@@ -67,8 +69,10 @@ public class ArtworkController {
   @PostMapping
   public ResponseEntity<Object> createArtwork(@RequestBody ArtworkRequest artworkRequest)
       throws DuplicateException, NotFoundException {
-    // User artist = userService.findById(artworkRequest.getArtistId());
-    User artist = new User();
+    Optional<User> artist = userService.getUserById(artworkRequest.getArtistId());
+    if (!artist.isPresent()) {
+      throw new NotFoundException("El Usuario(id): '" + artworkRequest.getArtistId() + "' no existe.");
+    }
 
     Set<Category> categories = new HashSet<Category>();
     for (String categoryString : artworkRequest.getCategories()) {
@@ -86,21 +90,21 @@ public class ArtworkController {
     Set<Style> styles = new HashSet<Style>();
     for (String styleString : artworkRequest.getStyles()) {
       Optional<Style> style = styleService.getStyleByName(styleString);
-      if (style == null) {
+      if (!style.isPresent()) {
         throw new NotFoundException("El Style: '" + styleString + "' no existe.");
       }
     }
 
     Set<Theme> themes = new HashSet<Theme>();
-    // for (String themeString : artworkRequest.getThemes()) {
-    // Optional<Theme> theme = themeService.getThemeByName(themeString);
-    // if (theme == null) {
-    // throw new NotFoundException("El Theme: '" + themeString +"' no existe.");
-    // }
-    // }
+    for (String themeString : artworkRequest.getThemes()) {
+      Optional<Theme> theme = themeService.getThemeByName(themeString);
+      if (!theme.isPresent()) {
+        throw new NotFoundException("El Theme: '" + themeString + "' no existe.");
+      }
+    }
 
     ArtworkBody body = ArtworkBody.builder()
-        .artist(artist)
+        .artist(artist.get())
         .categories(categories)
         .description(artworkRequest.getDescription())
         .hidden(artworkRequest.isHidden())

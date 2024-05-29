@@ -26,12 +26,12 @@ public class OrientationServiceImpl implements OrientationService {
   }
 
   public Optional<Orientation> getOrientationByName(String name) {
-    return Optional.ofNullable(orientationRepository.findByName(name).getFirst());
+    return orientationRepository.findByName(name);
   }
 
   public Orientation createOrientation(OrientationBody body) throws DuplicateException {
-    List<Orientation> orientations = orientationRepository.findByName(body.getName());
-    if (!orientations.isEmpty())
+    Optional<Orientation> orientation = orientationRepository.findByName(body.getName());
+    if (orientation.isPresent())
       throw new DuplicateException("La Orientation ya existe.");
     return orientationRepository.save(new Orientation(body));
   }

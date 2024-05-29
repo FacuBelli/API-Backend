@@ -6,10 +6,10 @@ import org.springframework.stereotype.Repository;
 
 import com.example.uade.tpo.ecommerce.entities.Category;
 
-import java.util.List;
+import java.util.Optional;
 
 @Repository
 public interface CategoryRepository extends JpaRepository<Category, Long> {
   @Query(value = "select c from Category c where c.name = ?1")
-  public List<Category> findByName(String name);
+  public Optional<Category> findByName(String name);
 }

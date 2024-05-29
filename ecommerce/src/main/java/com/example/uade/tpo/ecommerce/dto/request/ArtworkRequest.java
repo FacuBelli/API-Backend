@@ -1,19 +1,16 @@
 package com.example.uade.tpo.ecommerce.dto.request;
 
-import java.sql.Blob;
 import java.util.Set;
 
-import lombok.Builder;
 import lombok.Data;
 
 @Data
-@Builder
 public class ArtworkRequest {
   private Long artistId;
 
   private String description;
 
-  private Blob image;
+  private byte[] image;
 
   private double price;
 
@@ -30,4 +27,23 @@ public class ArtworkRequest {
   private Set<String> themes;
 
   private String orientation;
+
+  public ArtworkRequest() {
+  }
+
+  public ArtworkRequest(Long artistId, String description, byte[] image, double price, String title, int stock,
+      boolean hidden, Set<String> categories, Set<String> styles, Set<String> themes, String orientation) {
+    this.artistId = artistId;
+    this.description = description;
+    this.image = image;
+    this.price = price;
+    this.title = title;
+    this.stock = stock;
+    this.hidden = hidden;
+    this.categories = categories;
+    this.styles = styles;
+    this.themes = themes;
+    this.orientation = orientation;
+  }
+
 }

@@ -1,6 +1,5 @@
 package com.example.uade.tpo.ecommerce.entities;
 
-import java.sql.Blob;
 import java.util.Set;
 
 import com.example.uade.tpo.ecommerce.dto.body.ArtworkBody;
@@ -30,9 +29,9 @@ public class Artwork {
   
   @Column
   private String description;
-  
-  @Column
-  private Blob image;
+
+  @Column(columnDefinition = "IMAGE")
+  private byte[] image;
 
   @Column
   private double price;
