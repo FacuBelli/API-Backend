@@ -8,7 +8,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 
 import com.example.uade.tpo.ecommerce.repositories.ThemeRepository;
 import com.example.uade.tpo.ecommerce.services.ThemeService;
-import com.example.uade.tpo.ecommerce.dto.ThemeBody;
+import com.example.uade.tpo.ecommerce.dto.body.ThemeBody;
 import com.example.uade.tpo.ecommerce.entities.Theme;
 import com.example.uade.tpo.ecommerce.exceptions.DuplicateException;
 
