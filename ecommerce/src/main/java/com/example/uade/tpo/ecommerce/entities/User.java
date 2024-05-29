@@ -2,6 +2,8 @@ package com.example.uade.tpo.ecommerce.entities;
 
 import java.util.Set;
 
+import com.example.uade.tpo.ecommerce.dto.ThemeBody;
+
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
@@ -53,4 +55,12 @@ public class User {
 
     @OneToMany
     private Set<CartItem> cart;
+
+    public User() {
+  }
+
+  public User(UserBody body) {
+    this.biography = body.getBiography();
+
+  }
 }
