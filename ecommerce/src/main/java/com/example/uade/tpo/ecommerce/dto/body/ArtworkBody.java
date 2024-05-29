@@ -1,6 +1,5 @@
 package com.example.uade.tpo.ecommerce.dto.body;
 
-import java.sql.Blob;
 import java.util.Set;
 
 import com.example.uade.tpo.ecommerce.entities.Category;
@@ -19,7 +18,7 @@ public class ArtworkBody {
 
   private String description;
 
-  private Blob image;
+  private byte[] image;
 
   private double price;
 

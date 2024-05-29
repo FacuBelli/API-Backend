@@ -7,4 +7,11 @@ import lombok.Data;
 @Builder
 public class CategoryRequest {
   private String name;
+
+  public CategoryRequest() {
+  }
+
+  public CategoryRequest(String name) {
+    this.name = name;
+  }
 }

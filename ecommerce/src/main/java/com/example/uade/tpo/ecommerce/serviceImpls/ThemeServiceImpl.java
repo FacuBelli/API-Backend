@@ -4,6 +4,7 @@ import java.util.List;
 import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
 
 import com.example.uade.tpo.ecommerce.repositories.ThemeRepository;
 import com.example.uade.tpo.ecommerce.services.ThemeService;
@@ -11,6 +12,7 @@ import com.example.uade.tpo.ecommerce.dto.body.ThemeBody;
 import com.example.uade.tpo.ecommerce.entities.Theme;
 import com.example.uade.tpo.ecommerce.exceptions.DuplicateException;
 
+@Service
 public class ThemeServiceImpl implements ThemeService {
   @Autowired
   private ThemeRepository themeRepository;
