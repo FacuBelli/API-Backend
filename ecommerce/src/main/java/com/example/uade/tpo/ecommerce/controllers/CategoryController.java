@@ -5,7 +5,8 @@ package com.example.uade.tpo.ecommerce.controllers;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
-import com.example.uade.tpo.ecommerce.dto.CategoryBody;
+import com.example.uade.tpo.ecommerce.dto.body.CategoryBody;
+import com.example.uade.tpo.ecommerce.dto.request.CategoryRequest;
 import com.example.uade.tpo.ecommerce.entities.Category;
 import com.example.uade.tpo.ecommerce.exceptions.DuplicateException;
 import com.example.uade.tpo.ecommerce.services.CategoryService;
@@ -44,9 +45,10 @@ public class CategoryController {
   }
 
   @PostMapping
-  public ResponseEntity<Object> createCategory(@RequestBody CategoryBody categoryRequest)
+  public ResponseEntity<Object> createCategory(@RequestBody CategoryRequest categoryRequest)
       throws DuplicateException {
-    Category result = categoryService.createCategory(categoryRequest);
+    CategoryBody body = CategoryBody.builder().name(categoryRequest.getName()).build();
+    Category result = categoryService.createCategory(body);
     return ResponseEntity.created(URI.create("/category/" + result.getId())).body(result);
   }
 }
