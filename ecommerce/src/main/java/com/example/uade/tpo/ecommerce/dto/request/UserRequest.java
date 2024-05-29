@@ -1,11 +1,11 @@
-package com.example.uade.tpo.ecommerce.dto.body;
+package com.example.uade.tpo.ecommerce.dto.request;
 
 import lombok.Builder;
 import lombok.Data;
 
 @Data
 @Builder
-public class UserBody {
+public class UserRequest {
   private String biography;
   private String email;
   private String password;

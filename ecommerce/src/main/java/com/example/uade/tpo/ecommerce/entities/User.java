@@ -20,43 +20,43 @@ import lombok.Data;
 @Data
 @Table(name = "users")
 public class User {
-    @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long id;
+  @Id
+  @GeneratedValue(strategy = GenerationType.IDENTITY)
+  private Long id;
 
-    @Column
-    private String biography;
+  @Column
+  private String biography;
 
-    @Column
-    private String email;
+  @Column
+  private String email;
 
-    @Column
-    private String password;
+  @Column
+  private String password;
 
-    @Column
-    private String first_name;
+  @Column
+  private String first_name;
 
-    @Column
-    private String last_name;
+  @Column
+  private String last_name;
 
-    @Column
-    private boolean is_artist;
+  @Column
+  private boolean is_artist;
 
-    @OneToMany(mappedBy = "artist")
-    private Set<Artwork> artworks;
+  @OneToMany(mappedBy = "artist")
+  private Set<Artwork> artworks;
 
-    @ManyToMany
-    @JoinTable(inverseJoinColumns = { @JoinColumn(name = "bought_artwork_id") })
-    private Set<Artwork> bought_artworks;
+  @ManyToMany
+  @JoinTable(inverseJoinColumns = { @JoinColumn(name = "bought_artwork_id") })
+  private Set<Artwork> bought_artworks;
 
-    @ManyToMany
-    @JoinTable(inverseJoinColumns = { @JoinColumn(name = "favorite_artwork_id") })
-    private Set<Artwork> favorite_artworks;
+  @ManyToMany
+  @JoinTable(inverseJoinColumns = { @JoinColumn(name = "favorite_artwork_id") })
+  private Set<Artwork> favorite_artworks;
 
-    @OneToMany
-    private Set<CartItem> cart;
+  @OneToMany
+  private Set<CartItem> cart;
 
-    public User() {
+  public User() {
   }
 
   public User(UserBody body) {
@@ -66,6 +66,5 @@ public class User {
     this.first_name = body.getFirstName();
     this.last_name = body.getLastName();
     this.is_artist = body.isArtist();
-
   }
 }

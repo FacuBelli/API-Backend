@@ -1,6 +1,6 @@
 package com.example.uade.tpo.ecommerce.repositories;
 
-import java.util.List;
+import java.util.Optional;
 
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
@@ -10,6 +10,6 @@ import com.example.uade.tpo.ecommerce.entities.User;
 
 @Repository
 public interface UserRepository extends JpaRepository<User, Long> {
-  @Query(value = "select a from Artwork a where a.artist = ?1")
-  public List<User> findByUserId(Long id);
+  @Query(value = "select u from User u where u.email = ?1")
+  public Optional<User> findByEmail(String email);
 }
