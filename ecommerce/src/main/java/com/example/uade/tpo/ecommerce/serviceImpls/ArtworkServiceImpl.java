@@ -6,7 +6,7 @@ import java.util.Optional;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import com.example.uade.tpo.ecommerce.dto.ArtworkBody;
+import com.example.uade.tpo.ecommerce.dto.body.ArtworkBody;
 import com.example.uade.tpo.ecommerce.entities.Artwork;
 import com.example.uade.tpo.ecommerce.exceptions.DuplicateException;
 import com.example.uade.tpo.ecommerce.repositories.ArtworkRepository;

@@ -6,7 +6,7 @@ import java.util.Optional;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import com.example.uade.tpo.ecommerce.dto.OrientationBody;
+import com.example.uade.tpo.ecommerce.dto.body.OrientationBody;
 import com.example.uade.tpo.ecommerce.entities.Orientation;
 import com.example.uade.tpo.ecommerce.exceptions.DuplicateException;
 import com.example.uade.tpo.ecommerce.repositories.OrientationRepository;
@@ -23,6 +23,10 @@ public class OrientationServiceImpl implements OrientationService {
 
   public Optional<Orientation> getOrientationById(Long id) {
     return orientationRepository.findById(id);
+  }
+
+  public Optional<Orientation> getOrientationByName(String name) {
+    return Optional.ofNullable(orientationRepository.findByName(name).getFirst());
   }
 
   public Orientation createOrientation(OrientationBody body) throws DuplicateException {

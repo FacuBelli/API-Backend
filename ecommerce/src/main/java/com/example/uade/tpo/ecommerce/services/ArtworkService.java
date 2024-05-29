@@ -3,7 +3,7 @@ package com.example.uade.tpo.ecommerce.services;
 import java.util.List;
 import java.util.Optional;
 
-import com.example.uade.tpo.ecommerce.dto.ArtworkBody;
+import com.example.uade.tpo.ecommerce.dto.body.ArtworkBody;
 import com.example.uade.tpo.ecommerce.entities.Artwork;
 import com.example.uade.tpo.ecommerce.exceptions.DuplicateException;
 
