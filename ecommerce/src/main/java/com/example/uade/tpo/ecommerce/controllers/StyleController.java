@@ -30,7 +30,7 @@ public class StyleController {
   }
 
   @GetMapping("/{styleId}")
-  public ResponseEntity<Style> getCategoryById(@PathVariable Long styleId) {
+  public ResponseEntity<Style> getStylesById(@PathVariable Long styleId) {
     Optional<Style> result = styleService.getStyleById(styleId);
     if (result.isPresent())
       return ResponseEntity.ok(result.get());

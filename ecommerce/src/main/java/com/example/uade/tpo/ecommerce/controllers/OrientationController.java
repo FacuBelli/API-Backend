@@ -30,7 +30,7 @@ public class OrientationController {
   }
 
   @GetMapping("/{orientationId}")
-  public ResponseEntity<Orientation> getCategoryById(@PathVariable Long orientationId) {
+  public ResponseEntity<Orientation> getOrientationById(@PathVariable Long orientationId) {
     Optional<Orientation> result = orientationService.getOrientationById(orientationId);
     if (result.isPresent())
       return ResponseEntity.ok(result.get());
