@@ -1,6 +1,6 @@
 package com.example.uade.tpo.ecommerce.entities;
 
-import com.example.uade.tpo.ecommerce.dto.ThemeBody;
+import com.example.uade.tpo.ecommerce.dto.body.ThemeBody;
 
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
@@ -24,6 +24,5 @@ public class Theme {
 
   public Theme(ThemeBody body) {
     this.name = body.getName();
-
   }
 }
