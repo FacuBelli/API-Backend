@@ -75,6 +75,7 @@ public class ArtworkController {
     }
 
     Set<Category> categories = new HashSet<Category>();
+    if (!categories.isEmpty())
     for (String categoryString : artworkRequest.getCategories()) {
       Optional<Category> category = categoryService.getCategoryByName(categoryString);
       if (!category.isPresent()) {
@@ -88,20 +89,22 @@ public class ArtworkController {
     }
 
     Set<Style> styles = new HashSet<Style>();
-    for (String styleString : artworkRequest.getStyles()) {
-      Optional<Style> style = styleService.getStyleByName(styleString);
-      if (!style.isPresent()) {
-        throw new NotFoundException("El Style: '" + styleString + "' no existe.");
+    if (!styles.isEmpty())
+      for (String styleString : artworkRequest.getStyles()) {
+        Optional<Style> style = styleService.getStyleByName(styleString);
+        if (!style.isPresent()) {
+          throw new NotFoundException("El Style: '" + styleString + "' no existe.");
+        }
       }
-    }
 
     Set<Theme> themes = new HashSet<Theme>();
-    for (String themeString : artworkRequest.getThemes()) {
-      Optional<Theme> theme = themeService.getThemeByName(themeString);
-      if (!theme.isPresent()) {
-        throw new NotFoundException("El Theme: '" + themeString + "' no existe.");
+    if (!themes.isEmpty())
+      for (String themeString : artworkRequest.getThemes()) {
+        Optional<Theme> theme = themeService.getThemeByName(themeString);
+        if (!theme.isPresent()) {
+          throw new NotFoundException("El Theme: '" + themeString + "' no existe.");
+        }
       }
-    }
 
     ArtworkBody body = ArtworkBody.builder()
         .artist(artist.get())
