@@ -35,4 +35,24 @@ public class CategoryServiceImpl implements CategoryService {
       throw new DuplicateException("La Category ya existe.");
     return categoryRepository.save(new Category(body));
   }
+
+  public boolean deleteCategory(Long categoryId){
+    if(categoryRepository.existsById(categoryId)){
+      categoryRepository.deleteById(categoryId);
+      return true;
+    }
+    return false;
+  }
+
+  public Optional<Category> updateCategory(Long categoryId, CategoryBody body){
+    Optional<Category> categoryOpt = categoryRepository.findById(categoryId);
+
+    if(categoryOpt.isPresent()){
+      Category category = categoryOpt.get();
+      category.setName(body.getName());
+      categoryRepository.save(category);
+      return Optional.of(category);
+    }
+    return Optional.empty();
+  }
 }
