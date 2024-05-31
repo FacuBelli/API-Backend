@@ -15,4 +15,8 @@ public interface CategoryService {
   public Optional<Category> getCategoryByName(String name);
 
   public Category createCategory(CategoryBody body) throws DuplicateException;
+
+  public boolean deleteCategory(Long categoryId);
+
+  public Optional <Category> updateCategory(Long categoryId, CategoryBody body);
 }
