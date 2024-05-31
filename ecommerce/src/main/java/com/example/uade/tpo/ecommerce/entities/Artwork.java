@@ -43,7 +43,7 @@ public class Artwork {
   private int stock;
   
   @Column
-  private boolean hidden;
+  private boolean isHidden;
 
   @ManyToMany
   @JoinTable
@@ -71,7 +71,7 @@ public class Artwork {
     this.price = body.getPrice();
     this.title = body.getTitle();
     this.stock = body.getStock();
-    this.hidden = body.isHidden();
+    this.isHidden = body.isHidden();
     this.categories = body.getCategories();
     this.styles = body.getStyles();
     this.themes = body.getThemes();

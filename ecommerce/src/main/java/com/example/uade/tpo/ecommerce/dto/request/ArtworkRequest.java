@@ -6,6 +6,8 @@ import lombok.Data;
 
 @Data
 public class ArtworkRequest {
+  private Long id;
+
   private Long artistId;
 
   private String description;
@@ -18,7 +20,7 @@ public class ArtworkRequest {
 
   private int stock;
 
-  private boolean hidden;
+  private boolean isHidden;
 
   private Set<String> categories;
 
@@ -31,15 +33,16 @@ public class ArtworkRequest {
   public ArtworkRequest() {
   }
 
-  public ArtworkRequest(Long artistId, String description, byte[] image, double price, String title, int stock,
-      boolean hidden, Set<String> categories, Set<String> styles, Set<String> themes, String orientation) {
+  public ArtworkRequest(Long id, Long artistId, String description, byte[] image, double price, String title, int stock,
+      boolean isHidden, Set<String> categories, Set<String> styles, Set<String> themes, String orientation) {
+    this.id = id;
     this.artistId = artistId;
     this.description = description;
     this.image = image;
     this.price = price;
     this.title = title;
     this.stock = stock;
-    this.hidden = hidden;
+    this.isHidden = isHidden;
     this.categories = categories;
     this.styles = styles;
     this.themes = themes;

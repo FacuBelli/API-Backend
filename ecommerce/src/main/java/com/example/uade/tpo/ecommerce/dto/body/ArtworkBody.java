@@ -26,7 +26,7 @@ public class ArtworkBody {
 
   private int stock;
 
-  private boolean hidden;
+  private boolean isHidden;
 
   private Set<Category> categories;
 

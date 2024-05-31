@@ -4,6 +4,8 @@ import lombok.Data;
 
 @Data
 public class UserRequest {
+  private Long id;
+
   private String biography;
 
   private String email;
@@ -19,8 +21,9 @@ public class UserRequest {
   public UserRequest() {
   }
 
-  public UserRequest(String biography, String email, String password, String firstName, String lastName,
+  public UserRequest(Long id, String biography, String email, String password, String firstName, String lastName,
       boolean isArtist) {
+    this.id = id;
     this.biography = biography;
     this.email = email;
     this.password = password;
