@@ -80,6 +80,7 @@ public class ArtworkController {
       if (!category.isPresent()) {
         throw new NotFoundException("La Category: '" + categoryString + "' no existe.");
       }
+      categories.add(category.get());
     }
 
     Optional<Orientation> orientation = orientationService.getOrientationByName(artworkRequest.getOrientation());
@@ -93,6 +94,7 @@ public class ArtworkController {
       if (!style.isPresent()) {
         throw new NotFoundException("El Style: '" + styleString + "' no existe.");
       }
+      styles.add(style.get());
     }
 
     Set<Theme> themes = new HashSet<Theme>();
@@ -101,13 +103,14 @@ public class ArtworkController {
       if (!theme.isPresent()) {
         throw new NotFoundException("El Theme: '" + themeString + "' no existe.");
       }
+      themes.add(theme.get());
     }
 
     ArtworkBody body = ArtworkBody.builder()
         .artist(artist.get())
         .categories(categories)
         .description(artworkRequest.getDescription())
-        .hidden(artworkRequest.isHidden())
+        .isHidden(artworkRequest.isHidden())
         .image(artworkRequest.getImage())
         .orientation(orientation.get())
         .price(artworkRequest.getPrice())

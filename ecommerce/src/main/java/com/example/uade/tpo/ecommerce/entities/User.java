@@ -2,8 +2,12 @@ package com.example.uade.tpo.ecommerce.entities;
 
 import java.util.Set;
 
-import com.example.uade.tpo.ecommerce.dto.body.UserBody;
+import org.hibernate.annotations.DynamicUpdate;
 
+import com.example.uade.tpo.ecommerce.dto.body.UserBody;
+import com.fasterxml.jackson.annotation.JsonManagedReference;
+
+import jakarta.persistence.CascadeType;
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
@@ -18,6 +22,7 @@ import lombok.Data;
 
 @Entity
 @Data
+@DynamicUpdate
 @Table(name = "users")
 public class User {
   @Id
@@ -34,24 +39,27 @@ public class User {
   private String password;
 
   @Column
-  private String first_name;
+  private String firstName;
 
   @Column
-  private String last_name;
+  private String lastName;
 
   @Column
-  private boolean is_artist;
+  private boolean isArtist;
 
-  @OneToMany(mappedBy = "artist")
+  @OneToMany(mappedBy = "artist", cascade = CascadeType.ALL)
+  @JsonManagedReference
   private Set<Artwork> artworks;
 
   @ManyToMany
   @JoinTable(inverseJoinColumns = { @JoinColumn(name = "bought_artwork_id") })
-  private Set<Artwork> bought_artworks;
+  @JsonManagedReference
+  private Set<Artwork> boughtArtworks;
 
   @ManyToMany
   @JoinTable(inverseJoinColumns = { @JoinColumn(name = "favorite_artwork_id") })
-  private Set<Artwork> favorite_artworks;
+  @JsonManagedReference
+  private Set<Artwork> favoriteArtworks;
 
   @OneToMany
   private Set<CartItem> cart;
@@ -63,8 +71,8 @@ public class User {
     this.biography = body.getBiography();
     this.email = body.getEmail();
     this.password = body.getPassword();
-    this.first_name = body.getFirstName();
-    this.last_name = body.getLastName();
-    this.is_artist = body.isArtist();
+    this.firstName = body.getFirstName();
+    this.lastName = body.getLastName();
+    this.isArtist = body.isArtist();
   }
 }

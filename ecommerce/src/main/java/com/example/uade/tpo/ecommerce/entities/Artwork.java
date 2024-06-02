@@ -2,7 +2,11 @@ package com.example.uade.tpo.ecommerce.entities;
 
 import java.util.Set;
 
+import org.hibernate.annotations.DynamicUpdate;
+
 import com.example.uade.tpo.ecommerce.dto.body.ArtworkBody;
+import com.fasterxml.jackson.annotation.JsonBackReference;
+import com.fasterxml.jackson.annotation.JsonManagedReference;
 
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
@@ -13,24 +17,30 @@ import jakarta.persistence.JoinColumn;
 import jakarta.persistence.JoinTable;
 import jakarta.persistence.ManyToMany;
 import jakarta.persistence.ManyToOne;
-import jakarta.persistence.OneToOne;
 import lombok.Data;
+import lombok.EqualsAndHashCode;
+import lombok.ToString;
 
 @Entity
 @Data
+@DynamicUpdate
 public class Artwork {
   @Id
   @GeneratedValue(strategy = GenerationType.IDENTITY)
   private Long id;
 
-  @OneToOne
+  @ManyToOne
   @JoinColumn(name = "user_id", referencedColumnName = "id", nullable = false)
+  @JsonBackReference
+  @ToString.Exclude
+  @EqualsAndHashCode.Exclude
   private User artist;
   
   @Column
   private String description;
 
   @Column(columnDefinition = "IMAGE")
+  @ToString.Exclude
   private byte[] image;
 
   @Column
@@ -43,18 +53,21 @@ public class Artwork {
   private int stock;
   
   @Column
-  private boolean hidden;
+  private boolean isHidden;
 
   @ManyToMany
   @JoinTable
+  @JsonManagedReference
   private Set<Category> categories;
   
   @ManyToMany
   @JoinTable
+  @JsonManagedReference
   private Set<Style> styles;
   
   @ManyToMany
   @JoinTable
+  @JsonManagedReference
   private Set<Theme> themes;
 
   @ManyToOne
@@ -71,7 +84,7 @@ public class Artwork {
     this.price = body.getPrice();
     this.title = body.getTitle();
     this.stock = body.getStock();
-    this.hidden = body.isHidden();
+    this.isHidden = body.isHidden();
     this.categories = body.getCategories();
     this.styles = body.getStyles();
     this.themes = body.getThemes();

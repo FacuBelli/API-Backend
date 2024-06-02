@@ -1,5 +1,7 @@
 package com.example.uade.tpo.ecommerce.entities;
 
+import org.hibernate.annotations.DynamicUpdate;
+
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.Id;
@@ -9,6 +11,7 @@ import lombok.Data;
 
 @Entity
 @Data
+@DynamicUpdate
 public class CartItem {
   @Id
   @OneToOne
