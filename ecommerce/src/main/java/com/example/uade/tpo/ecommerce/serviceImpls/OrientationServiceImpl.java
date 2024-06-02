@@ -37,10 +37,14 @@ public class OrientationServiceImpl implements OrientationService {
   }
 
   public Orientation updateOrientation(Orientation orientation, OrientationBody body) {
-    throw new UnsupportedOperationException("Unimplemented method 'updateOrientation'");
+    if (body.getName() != null && !body.getName().equals(orientation.getName())) {
+      orientation.setName(body.getName());
+    }
+
+    return orientationRepository.save(orientation);
   }
 
   public void deleteOrientation(Orientation orientation) {
-    throw new UnsupportedOperationException("Unimplemented method 'deleteOrientation'");
+    orientationRepository.delete(orientation);
   }
 }
