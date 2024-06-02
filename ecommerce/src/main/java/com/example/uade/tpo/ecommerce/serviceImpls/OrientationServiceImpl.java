@@ -36,7 +36,7 @@ public class OrientationServiceImpl implements OrientationService {
     return orientationRepository.save(new Orientation(body));
   }
 
-  public Orientation updateOrientation(Orientation orientation, OrientationBody orientationBody) {
+  public Orientation updateOrientation(Orientation orientation, OrientationBody body) {
     throw new UnsupportedOperationException("Unimplemented method 'updateOrientation'");
   }
 

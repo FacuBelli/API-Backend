@@ -16,7 +16,7 @@ public interface ThemeService {
 
   public Theme createTheme(ThemeBody body) throws DuplicateException;
 
-  public Theme updateTheme(Theme Theme, ThemeBody ThemeBody);
+  public Theme updateTheme(Theme theme, ThemeBody body);
 
-  public void deleteTheme(Theme Theme);
+  public void deleteTheme(Theme theme);
 }

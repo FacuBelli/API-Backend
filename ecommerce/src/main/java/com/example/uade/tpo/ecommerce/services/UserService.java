@@ -17,9 +17,9 @@ public interface UserService {
 
   public User createUser(UserBody body) throws DuplicateException;
 
-  public User updateUser(User User, UserBody UserBody);
+  public User updateUser(User user, UserBody body);
 
-  public void deleteUser(User User);
+  public void deleteUser(User user);
 
   public User addFavorite(User user, Artwork artwork) throws DuplicateException, InvalidOperationException;
 

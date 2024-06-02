@@ -36,14 +36,23 @@ public class UserServiceImpl implements UserService {
     return userRepository.save(new User(body));
   }
 
+  public User updateUser(User user, UserBody body) {
+    throw new UnsupportedOperationException("Unimplemented method 'updateUser'");
+  }
+
+  public void deleteUser(User user) {
+    throw new UnsupportedOperationException("Unimplemented method 'deleteUser'");
+  }
+
   public User addFavorite(User user, Artwork artwork) throws DuplicateException, InvalidOperationException {
     if (user.getId() == artwork.getArtist().getId()) {
       throw new InvalidOperationException("El Artwork pertenece al User.");
     }
-    
+
     Set<Artwork> userFavorites = user.getFavoriteArtworks();
     for (Artwork favorite : userFavorites) {
-      if (favorite.getId() == artwork.getId()) throw new DuplicateException("Artwork ya incluido en favoritos.");
+      if (favorite.getId() == artwork.getId())
+        throw new DuplicateException("Artwork ya incluido en favoritos.");
     }
 
     userFavorites.add(artwork);
@@ -53,13 +62,13 @@ public class UserServiceImpl implements UserService {
 
   public User removeFavorite(User user, Artwork artwork) throws NotFoundException {
     Set<Artwork> userFavorites = user.getFavoriteArtworks();
-    
+
     boolean contained = userFavorites.remove(artwork);
 
     if (!contained) {
       throw new NotFoundException("Artwork no incluido en favoritos.");
     }
-    
+
     return userRepository.save(user);
   }
 
@@ -81,13 +90,5 @@ public class UserServiceImpl implements UserService {
 
   public User clearCart(User user) {
     return null;
-  }
-
-  public User updateUser(User User, UserBody UserBody) {
-    throw new UnsupportedOperationException("Unimplemented method 'updateUser'");
-  }
-
-  public void deleteUser(User User) {
-    throw new UnsupportedOperationException("Unimplemented method 'deleteUser'");
   }
 }

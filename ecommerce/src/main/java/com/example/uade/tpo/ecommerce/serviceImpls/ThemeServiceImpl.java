@@ -37,12 +37,12 @@ public class ThemeServiceImpl implements ThemeService {
   }
 
   @Override
-  public Theme updateTheme(Theme Theme, ThemeBody ThemeBody) {
+  public Theme updateTheme(Theme theme, ThemeBody body) {
     throw new UnsupportedOperationException("Unimplemented method 'updateTheme'");
   }
 
   @Override
-  public void deleteTheme(Theme Theme) {
+  public void deleteTheme(Theme theme) {
     throw new UnsupportedOperationException("Unimplemented method 'deleteTheme'");
   }
 }

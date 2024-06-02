@@ -16,7 +16,7 @@ public interface OrientationService {
 
   public Orientation createOrientation(OrientationBody body) throws DuplicateException;
 
-  public Orientation updateOrientation(Orientation orientation, OrientationBody orientationBody);
+  public Orientation updateOrientation(Orientation orientation, OrientationBody body);
 
   public void deleteOrientation(Orientation orientation);
 }
