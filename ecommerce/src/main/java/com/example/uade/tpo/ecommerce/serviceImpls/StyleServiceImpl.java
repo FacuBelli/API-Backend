@@ -37,10 +37,14 @@ public class StyleServiceImpl implements StyleService {
   }
 
   public Style updateStyle(Style style, StyleBody body) {
-    throw new UnsupportedOperationException("Unimplemented method 'updateStyle'");
+    if (body.getName() != null && !body.getName().equals(style.getName())) {
+      style.setName(body.getName());
+    }
+
+    return styleRepository.save(style);
   }
 
   public void deleteStyle(Style style) {
-    throw new UnsupportedOperationException("Unimplemented method 'deleteStyle'");
+    styleRepository.delete(style);
   }
 }
