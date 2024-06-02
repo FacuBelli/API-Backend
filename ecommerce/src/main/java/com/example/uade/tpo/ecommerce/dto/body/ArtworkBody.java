@@ -20,13 +20,13 @@ public class ArtworkBody {
 
   private byte[] image;
 
-  private double price;
+  private Double price;
 
   private String title;
 
-  private int stock;
+  private Integer stock;
 
-  private boolean isHidden;
+  private Boolean isHidden;
 
   private Set<Category> categories;
 
