@@ -31,15 +31,18 @@ public class CategoryServiceImpl implements CategoryService {
 
   public Category createCategory(CategoryBody body) throws DuplicateException {
     Optional<Category> category = categoryRepository.findByName(body.getName());
-    if (category.isPresent())
+    if (category.isPresent()) {
       throw new DuplicateException("La Category ya existe.");
+    }
+
     return categoryRepository.save(new Category(body));
   }
 
   public Category updateCategory(Category category, CategoryBody body) {
-    if (body.getName() != null && body.getName() != category.getName()) {
+    if (body.getName() != null && !body.getName().equals(category.getName())) {
       category.setName(body.getName());
     }
+
     return categoryRepository.save(category);
   }
 
