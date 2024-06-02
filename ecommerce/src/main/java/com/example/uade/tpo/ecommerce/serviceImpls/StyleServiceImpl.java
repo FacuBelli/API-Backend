@@ -35,4 +35,12 @@ public class StyleServiceImpl implements StyleService {
       throw new DuplicateException("El Style ya existe.");
     return styleRepository.save(new Style(body));
   }
+
+  public Style updateStyle(Style Style, StyleBody StyleBody) {
+    throw new UnsupportedOperationException("Unimplemented method 'updateStyle'");
+  }
+
+  public void deleteStyle(Style Style) {
+    throw new UnsupportedOperationException("Unimplemented method 'deleteStyle'");
+  }
 }

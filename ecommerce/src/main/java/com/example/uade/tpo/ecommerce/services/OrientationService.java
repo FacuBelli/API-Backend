@@ -15,4 +15,8 @@ public interface OrientationService {
   public Optional<Orientation> getOrientationByName(String name);
 
   public Orientation createOrientation(OrientationBody body) throws DuplicateException;
+
+  public Orientation updateOrientation(Orientation orientation, OrientationBody orientationBody);
+
+  public void deleteOrientation(Orientation orientation);
 }

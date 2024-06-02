@@ -15,4 +15,8 @@ public interface StyleService {
   public Optional<Style> getStyleByName(String name);
 
   public Style createStyle(StyleBody body) throws DuplicateException;
+
+  public Style updateStyle(Style Style, StyleBody StyleBody);
+
+  public void deleteStyle(Style Style);
 }

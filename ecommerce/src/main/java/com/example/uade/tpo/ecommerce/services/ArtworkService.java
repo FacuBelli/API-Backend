@@ -15,4 +15,8 @@ public interface ArtworkService {
   public Optional<Artwork> getArtworkById(Long id);
 
   public Artwork createArtwork(ArtworkBody body) throws DuplicateException;
+
+  public Artwork updateArtwork(Artwork artwork, ArtworkBody body);
+
+  public void deleteArtwork(Artwork artwork);
 }

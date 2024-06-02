@@ -35,4 +35,12 @@ public class OrientationServiceImpl implements OrientationService {
       throw new DuplicateException("La Orientation ya existe.");
     return orientationRepository.save(new Orientation(body));
   }
+
+  public Orientation updateOrientation(Orientation orientation, OrientationBody orientationBody) {
+    throw new UnsupportedOperationException("Unimplemented method 'updateOrientation'");
+  }
+
+  public void deleteOrientation(Orientation orientation) {
+    throw new UnsupportedOperationException("Unimplemented method 'deleteOrientation'");
+  }
 }

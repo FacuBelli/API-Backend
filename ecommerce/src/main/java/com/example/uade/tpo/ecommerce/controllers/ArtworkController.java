@@ -59,15 +59,17 @@ public class ArtworkController {
   }
 
   @GetMapping("/{artworkId}")
-  public ResponseEntity<Artwork> getArtworkById(@PathVariable Long artworkId) {
-    Optional<Artwork> result = artworkService.getArtworkById(artworkId);
-    if (result.isPresent())
-      return ResponseEntity.ok(result.get());
-    return ResponseEntity.noContent().build();
+  public ResponseEntity<Artwork> getArtworkById(@PathVariable Long artworkId) throws NotFoundException {
+    Optional<Artwork> artwork = artworkService.getArtworkById(artworkId);
+    if (!artwork.isPresent()) {
+      throw new NotFoundException("El Artwork(id): " + artworkId + " no existe.");
+    }
+
+    return ResponseEntity.ok(artwork.get());
   }
 
   @PostMapping
-  public ResponseEntity<Object> createArtwork(@RequestBody ArtworkRequest artworkRequest)
+  public ResponseEntity<Artwork> createArtwork(@RequestBody ArtworkRequest artworkRequest)
       throws DuplicateException, NotFoundException {
     Optional<User> artist = userService.getUserById(artworkRequest.getArtistId());
     if (!artist.isPresent()) {

@@ -15,4 +15,8 @@ public interface ThemeService {
   public Optional<Theme> getThemeByName(String name);
 
   public Theme createTheme(ThemeBody body) throws DuplicateException;
+
+  public Theme updateTheme(Theme Theme, ThemeBody ThemeBody);
+
+  public void deleteTheme(Theme Theme);
 }

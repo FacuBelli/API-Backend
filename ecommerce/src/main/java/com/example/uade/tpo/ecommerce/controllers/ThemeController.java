@@ -17,6 +17,7 @@ import com.example.uade.tpo.ecommerce.dto.body.ThemeBody;
 import com.example.uade.tpo.ecommerce.dto.request.ThemeRequest;
 import com.example.uade.tpo.ecommerce.entities.Theme;
 import com.example.uade.tpo.ecommerce.exceptions.DuplicateException;
+import com.example.uade.tpo.ecommerce.exceptions.NotFoundException;
 import com.example.uade.tpo.ecommerce.services.ThemeService;
 
 @RestController
@@ -32,18 +33,20 @@ public class ThemeController {
   }
 
   @GetMapping("/{themeId}")
-  public ResponseEntity<Theme> getArtworkById(@PathVariable Long artworkId) {
-    Optional<Theme> result = themeService.getThemeById(artworkId);
-    if (result.isPresent())
-      return ResponseEntity.ok(result.get());
-    return ResponseEntity.noContent().build();
+  public ResponseEntity<Theme> getThemeById(@PathVariable Long themeId) throws NotFoundException {
+    Optional<Theme> theme = themeService.getThemeById(themeId);
+    if (!theme.isPresent()) {
+      throw new NotFoundException("El Theme(id): " + themeId + " no existe.");
+    }
+
+    return ResponseEntity.ok(theme.get());
   }
 
   @PostMapping
-  public ResponseEntity<Object> createTheme(@RequestBody ThemeRequest themeRequest)
+  public ResponseEntity<Theme> createTheme(@RequestBody ThemeRequest themeRequest)
       throws DuplicateException {
     ThemeBody body = ThemeBody.builder().name(themeRequest.getName()).build();
-    Theme result = themeService.createTheme(body);
-    return ResponseEntity.created(URI.create("/theme/" + result.getId())).body(result);
+    Theme theme = themeService.createTheme(body);
+    return ResponseEntity.created(URI.create("/theme/" + theme.getId())).body(theme);
   }
 }

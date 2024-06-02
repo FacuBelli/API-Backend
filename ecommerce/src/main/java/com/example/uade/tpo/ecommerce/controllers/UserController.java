@@ -40,15 +40,17 @@ public class UserController {
   }
 
   @GetMapping("/{userId}")
-  public ResponseEntity<User> getUserById(@PathVariable Long userId) {
-    Optional<User> result = userService.getUserById(userId);
-    if (result.isPresent())
-      return ResponseEntity.ok(result.get());
-    return ResponseEntity.noContent().build();
+  public ResponseEntity<User> getUserById(@PathVariable Long userId) throws NotFoundException {
+    Optional<User> user = userService.getUserById(userId);
+    if (!user.isPresent()) {
+      throw new NotFoundException("El User(id): " + userId + " no existe.");
+    }
+
+    return ResponseEntity.ok(user.get());
   }
 
   @PostMapping
-  public ResponseEntity<Object> createUser(@RequestBody UserRequest userRequest)
+  public ResponseEntity<User> createUser(@RequestBody UserRequest userRequest)
       throws DuplicateException {
     UserBody body = UserBody.builder()
         .biography(userRequest.getBiography())
@@ -58,8 +60,8 @@ public class UserController {
         .lastName(userRequest.getLastName())
         .password(userRequest.getPassword())
         .build();
-    User result = userService.createUser(body);
-    return ResponseEntity.created(URI.create("/user/" + result.getId())).body(result);
+    User user = userService.createUser(body);
+    return ResponseEntity.created(URI.create("/user/" + user.getId())).body(user);
   }
 
   @PostMapping("/{userId}/favorite/{artworkId}")
@@ -72,11 +74,11 @@ public class UserController {
 
     Optional<Artwork> artwork = artworkService.getArtworkById(artworkId);
     if (!artwork.isPresent()) {
-      throw new NotFoundException("El Artwork no existe:\n { artworkId: " + artworkId + " }" );
+      throw new NotFoundException("El Artwork no existe:\n { artworkId: " + artworkId + " }");
     }
 
-    User result = userService.addFavorite(user.get(), artwork.get());
-    return ResponseEntity.ok(result);
+    User newUser = userService.addFavorite(user.get(), artwork.get());
+    return ResponseEntity.ok(newUser);
   }
 
   @DeleteMapping("/{userId}/favorite/{artworkId}")
@@ -89,11 +91,11 @@ public class UserController {
 
     Optional<Artwork> artwork = artworkService.getArtworkById(artworkId);
     if (!artwork.isPresent()) {
-      throw new NotFoundException("El Artwork no existe:\n { artworkId: " + artworkId + " }" );
+      throw new NotFoundException("El Artwork no existe:\n { artworkId: " + artworkId + " }");
     }
 
-    User result = userService.removeFavorite(user.get(), artwork.get());
-    return ResponseEntity.ok(result);
+    User newUser = userService.removeFavorite(user.get(), artwork.get());
+    return ResponseEntity.ok(newUser);
   }
 
   @DeleteMapping("/{userId}/favorite")
@@ -104,7 +106,7 @@ public class UserController {
       throw new NotFoundException("El Usuario no existe:\n { userId: " + userId + " }");
     }
 
-    User result = userService.clearFavorites(user.get());
-    return ResponseEntity.ok(result);
+    User newUser = userService.clearFavorites(user.get());
+    return ResponseEntity.ok(newUser);
   }
 }

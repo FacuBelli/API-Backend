@@ -17,6 +17,7 @@ import com.example.uade.tpo.ecommerce.dto.body.OrientationBody;
 import com.example.uade.tpo.ecommerce.dto.request.OrientationRequest;
 import com.example.uade.tpo.ecommerce.entities.Orientation;
 import com.example.uade.tpo.ecommerce.exceptions.DuplicateException;
+import com.example.uade.tpo.ecommerce.exceptions.NotFoundException;
 import com.example.uade.tpo.ecommerce.services.OrientationService;
 
 @RestController
@@ -31,18 +32,20 @@ public class OrientationController {
   }
 
   @GetMapping("/{orientationId}")
-  public ResponseEntity<Orientation> getOrientationById(@PathVariable Long orientationId) {
-    Optional<Orientation> result = orientationService.getOrientationById(orientationId);
-    if (result.isPresent())
-      return ResponseEntity.ok(result.get());
-    return ResponseEntity.noContent().build();
+  public ResponseEntity<Orientation> getOrientationById(@PathVariable Long orientationId) throws NotFoundException {
+    Optional<Orientation> orientation = orientationService.getOrientationById(orientationId);
+    if (!orientation.isPresent()) {
+      throw new NotFoundException("La Orientation(id): " + orientationId + " no existe.");
+    }
+
+    return ResponseEntity.ok(orientation.get());
   }
 
   @PostMapping
   public ResponseEntity<Object> createOrientation(@RequestBody OrientationRequest orientationRequest)
       throws DuplicateException {
     OrientationBody body = OrientationBody.builder().name(orientationRequest.getName()).build();
-    Orientation result = orientationService.createOrientation(body);
-    return ResponseEntity.created(URI.create("/orientation/" + result.getId())).body(result);
+    Orientation orientation = orientationService.createOrientation(body);
+    return ResponseEntity.created(URI.create("/orientation/" + orientation.getId())).body(orientation);
   }
 }

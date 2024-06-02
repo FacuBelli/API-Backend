@@ -82,4 +82,12 @@ public class UserServiceImpl implements UserService {
   public User clearCart(User user) {
     return null;
   }
+
+  public User updateUser(User User, UserBody UserBody) {
+    throw new UnsupportedOperationException("Unimplemented method 'updateUser'");
+  }
+
+  public void deleteUser(User User) {
+    throw new UnsupportedOperationException("Unimplemented method 'deleteUser'");
+  }
 }

@@ -36,23 +36,14 @@ public class CategoryServiceImpl implements CategoryService {
     return categoryRepository.save(new Category(body));
   }
 
-  public boolean deleteCategory(Long categoryId){
-    if(categoryRepository.existsById(categoryId)){
-      categoryRepository.deleteById(categoryId);
-      return true;
+  public Category updateCategory(Category category, CategoryBody body) {
+    if (body.getName() != null && body.getName() != category.getName()) {
+      category.setName(body.getName());
     }
-    return false;
+    return categoryRepository.save(category);
   }
 
-  public Optional<Category> updateCategory(Long categoryId, CategoryBody body){
-    Optional<Category> categoryOpt = categoryRepository.findById(categoryId);
-
-    if(categoryOpt.isPresent()){
-      Category category = categoryOpt.get();
-      category.setName(body.getName());
-      categoryRepository.save(category);
-      return Optional.of(category);
-    }
-    return Optional.empty();
+  public void deleteCategory(Category category) {
+    categoryRepository.delete(category);
   }
 }

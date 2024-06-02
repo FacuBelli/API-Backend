@@ -35,4 +35,14 @@ public class ThemeServiceImpl implements ThemeService {
       throw new DuplicateException("El Theme ya existe.");
     return themeRepository.save(new Theme(body));
   }
+
+  @Override
+  public Theme updateTheme(Theme Theme, ThemeBody ThemeBody) {
+    throw new UnsupportedOperationException("Unimplemented method 'updateTheme'");
+  }
+
+  @Override
+  public void deleteTheme(Theme Theme) {
+    throw new UnsupportedOperationException("Unimplemented method 'deleteTheme'");
+  }
 }

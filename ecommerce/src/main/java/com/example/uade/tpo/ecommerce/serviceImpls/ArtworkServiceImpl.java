@@ -32,4 +32,12 @@ public class ArtworkServiceImpl implements ArtworkService {
   public Artwork createArtwork(ArtworkBody body) throws DuplicateException {
     return artworkRepository.save(new Artwork(body));
   }
+
+  public Artwork updateArtwork(Artwork artwork, ArtworkBody body) {
+    throw new UnsupportedOperationException("Unimplemented method 'updateArtwork'");
+  }
+
+  public void deleteArtwork(Artwork artwork) {
+    throw new UnsupportedOperationException("Unimplemented method 'deleteArtwork'");
+  }
 }

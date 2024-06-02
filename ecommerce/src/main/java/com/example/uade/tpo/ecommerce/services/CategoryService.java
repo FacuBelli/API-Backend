@@ -16,7 +16,7 @@ public interface CategoryService {
 
   public Category createCategory(CategoryBody body) throws DuplicateException;
 
-  public boolean deleteCategory(Long categoryId);
+  public Category updateCategory(Category category, CategoryBody body);
 
-  public Optional <Category> updateCategory(Long categoryId, CategoryBody body);
+  public void deleteCategory(Category category);
 }
