@@ -36,13 +36,15 @@ public class ThemeServiceImpl implements ThemeService {
     return themeRepository.save(new Theme(body));
   }
 
-  @Override
   public Theme updateTheme(Theme theme, ThemeBody body) {
-    throw new UnsupportedOperationException("Unimplemented method 'updateTheme'");
+    if (body.getName() != null && !body.getName().equals(theme.getName())) {
+      theme.setName(body.getName());
+    }
+
+    return themeRepository.save(theme);
   }
 
-  @Override
   public void deleteTheme(Theme theme) {
-    throw new UnsupportedOperationException("Unimplemented method 'deleteTheme'");
+    themeRepository.delete(theme);
   }
 }
