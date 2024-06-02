@@ -75,12 +75,12 @@ public class ArtworkController {
     }
 
     Set<Category> categories = new HashSet<Category>();
-    if (!categories.isEmpty())
     for (String categoryString : artworkRequest.getCategories()) {
       Optional<Category> category = categoryService.getCategoryByName(categoryString);
       if (!category.isPresent()) {
         throw new NotFoundException("La Category: '" + categoryString + "' no existe.");
       }
+      categories.add(category.get());
     }
 
     Optional<Orientation> orientation = orientationService.getOrientationByName(artworkRequest.getOrientation());
@@ -89,28 +89,28 @@ public class ArtworkController {
     }
 
     Set<Style> styles = new HashSet<Style>();
-    if (!styles.isEmpty())
-      for (String styleString : artworkRequest.getStyles()) {
-        Optional<Style> style = styleService.getStyleByName(styleString);
-        if (!style.isPresent()) {
-          throw new NotFoundException("El Style: '" + styleString + "' no existe.");
-        }
+    for (String styleString : artworkRequest.getStyles()) {
+      Optional<Style> style = styleService.getStyleByName(styleString);
+      if (!style.isPresent()) {
+        throw new NotFoundException("El Style: '" + styleString + "' no existe.");
       }
+      styles.add(style.get());
+    }
 
     Set<Theme> themes = new HashSet<Theme>();
-    if (!themes.isEmpty())
-      for (String themeString : artworkRequest.getThemes()) {
-        Optional<Theme> theme = themeService.getThemeByName(themeString);
-        if (!theme.isPresent()) {
-          throw new NotFoundException("El Theme: '" + themeString + "' no existe.");
-        }
+    for (String themeString : artworkRequest.getThemes()) {
+      Optional<Theme> theme = themeService.getThemeByName(themeString);
+      if (!theme.isPresent()) {
+        throw new NotFoundException("El Theme: '" + themeString + "' no existe.");
       }
+      themes.add(theme.get());
+    }
 
     ArtworkBody body = ArtworkBody.builder()
         .artist(artist.get())
         .categories(categories)
         .description(artworkRequest.getDescription())
-        .hidden(artworkRequest.isHidden())
+        .isHidden(artworkRequest.isHidden())
         .image(artworkRequest.getImage())
         .orientation(orientation.get())
         .price(artworkRequest.getPrice())
