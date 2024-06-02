@@ -7,9 +7,14 @@ import lombok.Data;
 @Builder
 public class UserBody {
   private String biography;
+  
   private String email;
+  
   private String password;
+  
   private String firstName;
+  
   private String lastName;
+  
   private boolean isArtist;
 }

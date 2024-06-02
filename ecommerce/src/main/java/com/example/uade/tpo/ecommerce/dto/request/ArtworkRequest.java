@@ -6,8 +6,6 @@ import lombok.Data;
 
 @Data
 public class ArtworkRequest {
-  private Long id;
-
   private Long artistId;
 
   private String description;
@@ -33,9 +31,8 @@ public class ArtworkRequest {
   public ArtworkRequest() {
   }
 
-  public ArtworkRequest(Long id, Long artistId, String description, byte[] image, double price, String title, int stock,
+  public ArtworkRequest(Long artistId, String description, byte[] image, double price, String title, int stock,
       boolean isHidden, Set<String> categories, Set<String> styles, Set<String> themes, String orientation) {
-    this.id = id;
     this.artistId = artistId;
     this.description = description;
     this.image = image;

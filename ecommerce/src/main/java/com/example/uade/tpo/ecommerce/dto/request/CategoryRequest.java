@@ -4,15 +4,12 @@ import lombok.Data;
 
 @Data
 public class CategoryRequest {
-  private Long id;
-
   private String name;
 
   public CategoryRequest() {
   }
 
-  public CategoryRequest(Long id, String name) {
-    this.id = id;
+  public CategoryRequest(String name) {
     this.name = name;
   }
 }

@@ -4,15 +4,12 @@ import lombok.Data;
 
 @Data
 public class StyleRequest {
-  private Long id;
-
   private String name;
 
   public StyleRequest() {
   }
 
-  public StyleRequest(Long id, String name) {
-    this.id = id;
+  public StyleRequest(String name) {
     this.name = name;
   }
 }
