@@ -44,16 +44,16 @@ public class Artwork {
   private byte[] image;
 
   @Column
-  private double price;
+  private Double price;
   
   @Column
   private String title;
   
   @Column
-  private int stock;
+  private Integer stock;
   
   @Column
-  private boolean isHidden;
+  private Boolean isHidden;
 
   @ManyToMany
   @JoinTable
@@ -84,7 +84,7 @@ public class Artwork {
     this.price = body.getPrice();
     this.title = body.getTitle();
     this.stock = body.getStock();
-    this.isHidden = body.isHidden();
+    this.isHidden = body.getIsHidden();
     this.categories = body.getCategories();
     this.styles = body.getStyles();
     this.themes = body.getThemes();

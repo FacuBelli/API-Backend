@@ -36,14 +36,15 @@ public class StyleServiceImpl implements StyleService {
     return styleRepository.save(new Style(body));
   }
 
-  @Override
   public Style updateStyle(Style style, StyleBody body) {
+    if (body.getName() != null && !body.getName().equals(style.getName())) {
       style.setName(body.getName());
-      return styleRepository.save(style);
+    }
+
+    return styleRepository.save(style);
   }
 
-  @Override
   public void deleteStyle(Style style) {
-      styleRepository.delete(style);
+    styleRepository.delete(style);
   }
 }

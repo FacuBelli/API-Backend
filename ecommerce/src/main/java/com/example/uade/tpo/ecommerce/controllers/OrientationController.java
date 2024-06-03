@@ -44,31 +44,36 @@ public class OrientationController {
   }
 
   @PostMapping
-  public ResponseEntity<Object> createOrientation(@RequestBody OrientationRequest orientationRequest)
+  public ResponseEntity<Orientation> createOrientation(@RequestBody OrientationRequest orientationRequest)
       throws DuplicateException {
     OrientationBody body = OrientationBody.builder().name(orientationRequest.getName()).build();
     Orientation orientation = orientationService.createOrientation(body);
     return ResponseEntity.created(URI.create("/orientation/" + orientation.getId())).body(orientation);
   }
+
+  @PutMapping("/{orientationId}")
+  public ResponseEntity<Orientation> updateOrientation(@PathVariable Long orientationId,
+      @RequestBody OrientationRequest orientationRequest) throws NotFoundException {
+    Optional<Orientation> orientation = orientationService.getOrientationById(orientationId);
+    if (!orientation.isPresent()) {
+      throw new NotFoundException("La Orientation(id): " + orientationId + " no existe.");
+    }
+
+    OrientationBody body = OrientationBody.builder().name(orientationRequest.getName()).build();
+    Orientation newOrientation = orientationService.updateOrientation(orientation.get(), body);
+
+    return ResponseEntity.ok(newOrientation);
+  }
+
   @DeleteMapping("/{orientationId}")
   public ResponseEntity<Void> deleteOrientation(@PathVariable Long orientationId) throws NotFoundException {
     Optional<Orientation> orientation = orientationService.getOrientationById(orientationId);
     if (!orientation.isPresent()) {
       throw new NotFoundException("La Orientation(id): " + orientationId + " no existe.");
     }
-    orientationService.deleteOrientation(orientation.get());
-    return ResponseEntity.noContent().build();
-  }
 
-  @PutMapping("/{orientationId}")
-  public ResponseEntity<Orientation> updateOrientation(@PathVariable Long orientationId, @RequestBody OrientationRequest orientationRequest)
-      throws NotFoundException {
-    Optional<Orientation> orientation = orientationService.getOrientationById(orientationId);
-    if (!orientation.isPresent()) {
-      throw new NotFoundException("La Orientation(id): " + orientationId + " no existe.");
-    }
-    OrientationBody body = OrientationBody.builder().name(orientationRequest.getName()).build();
-    Orientation updatedOrientation = orientationService.updateOrientation(orientation.get(), body);
-    return ResponseEntity.ok(updatedOrientation);
+    orientationService.deleteOrientation(orientation.get());
+
+    return ResponseEntity.ok().build();
   }
 }

@@ -6,7 +6,6 @@ import java.util.Optional;
 import com.example.uade.tpo.ecommerce.dto.body.ThemeBody;
 import com.example.uade.tpo.ecommerce.entities.Theme;
 import com.example.uade.tpo.ecommerce.exceptions.DuplicateException;
-import com.example.uade.tpo.ecommerce.exceptions.NotFoundException;
 
 public interface ThemeService {
   public List<Theme> getThemes();
@@ -17,6 +16,7 @@ public interface ThemeService {
 
   public Theme createTheme(ThemeBody body) throws DuplicateException;
 
-  void deleteTheme(Long themeId) throws NotFoundException;
-  Theme updateTheme(Long themeId, ThemeBody body) throws NotFoundException;
+  public Theme updateTheme(Theme theme, ThemeBody body);
+
+  public void deleteTheme(Theme theme);
 }

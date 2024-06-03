@@ -51,18 +51,30 @@ public class ThemeController {
     Theme theme = themeService.createTheme(body);
     return ResponseEntity.created(URI.create("/theme/" + theme.getId())).body(theme);
   }
-  @DeleteMapping("/{themeId}")
-  public ResponseEntity<Void> deleteTheme(@PathVariable Long themeId) throws NotFoundException {
-    themeService.deleteTheme(themeId);
-    return ResponseEntity.noContent().build();
-  }
 
   @PutMapping("/{themeId}")
   public ResponseEntity<Theme> updateTheme(@PathVariable Long themeId, @RequestBody ThemeRequest themeRequest)
       throws NotFoundException {
+    Optional<Theme> theme = themeService.getThemeById(themeId);
+    if (!theme.isPresent()) {
+      throw new NotFoundException("El Theme(id): " + themeId + " no existe.");
+    }
+
     ThemeBody body = ThemeBody.builder().name(themeRequest.getName()).build();
-    Theme updatedTheme = themeService.updateTheme(themeId, body);
-    return ResponseEntity.ok(updatedTheme);
+    Theme newTheme = themeService.updateTheme(theme.get(), body);
+
+    return ResponseEntity.ok(newTheme);
+  }
+
+  @DeleteMapping("/{themeId}")
+  public ResponseEntity<Void> deleteTheme(@PathVariable Long themeId) throws NotFoundException {
+    Optional<Theme> theme = themeService.getThemeById(themeId);
+    if (!theme.isPresent()) {
+      throw new NotFoundException("El Theme(id): " + themeId + " no existe.");
+    }
+
+    themeService.deleteTheme(theme.get());
+
+    return ResponseEntity.ok().build();
   }
 }
-

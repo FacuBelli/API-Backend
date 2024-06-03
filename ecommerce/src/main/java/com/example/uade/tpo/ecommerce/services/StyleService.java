@@ -16,7 +16,7 @@ public interface StyleService {
 
   public Style createStyle(StyleBody body) throws DuplicateException;
 
-  public Style updateStyle(Style Style, StyleBody StyleBody);
+  public Style updateStyle(Style style, StyleBody body);
 
-  public void deleteStyle(Style Style);
+  public void deleteStyle(Style style);
 }

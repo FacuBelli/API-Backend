@@ -50,16 +50,6 @@ public class StyleController {
     return ResponseEntity.created(URI.create("/style/" + style.getId())).body(style);
   }
 
-  @DeleteMapping("/{styleId}")
-  public ResponseEntity<Void> deleteStyle(@PathVariable Long styleId) throws NotFoundException {
-    Optional<Style> style = styleService.getStyleById(styleId);
-    if (!style.isPresent()) {
-      throw new NotFoundException("El Style(id): " + styleId + " no existe.");
-    }
-    styleService.deleteStyle(style.get());
-    return ResponseEntity.noContent().build();
-  }
-
   @PutMapping("/{styleId}")
   public ResponseEntity<Style> updateStyle(@PathVariable Long styleId, @RequestBody StyleRequest styleRequest)
       throws NotFoundException {
@@ -67,8 +57,22 @@ public class StyleController {
     if (!style.isPresent()) {
       throw new NotFoundException("El Style(id): " + styleId + " no existe.");
     }
+
     StyleBody body = StyleBody.builder().name(styleRequest.getName()).build();
-    Style updatedStyle = styleService.updateStyle(style.get(), body);
-    return ResponseEntity.ok(updatedStyle);
+    Style newStyle = styleService.updateStyle(style.get(), body);
+
+    return ResponseEntity.ok(newStyle);
+  }
+
+  @DeleteMapping("/{styleId}")
+  public ResponseEntity<Void> deleteStyle(@PathVariable Long styleId) throws NotFoundException {
+    Optional<Style> style = styleService.getStyleById(styleId);
+    if (!style.isPresent()) {
+      throw new NotFoundException("El Style(id): " + styleId + " no existe.");
+    }
+
+    styleService.deleteStyle(style.get());
+
+    return ResponseEntity.ok().build();
   }
 }
