@@ -36,11 +36,14 @@ public class StyleServiceImpl implements StyleService {
     return styleRepository.save(new Style(body));
   }
 
-  public Style updateStyle(Style Style, StyleBody StyleBody) {
-    throw new UnsupportedOperationException("Unimplemented method 'updateStyle'");
+  @Override
+  public Style updateStyle(Style style, StyleBody body) {
+      style.setName(body.getName());
+      return styleRepository.save(style);
   }
 
-  public void deleteStyle(Style Style) {
-    throw new UnsupportedOperationException("Unimplemented method 'deleteStyle'");
+  @Override
+  public void deleteStyle(Style style) {
+      styleRepository.delete(style);
   }
 }
