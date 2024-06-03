@@ -6,9 +6,11 @@ import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
@@ -47,5 +49,26 @@ public class OrientationController {
     OrientationBody body = OrientationBody.builder().name(orientationRequest.getName()).build();
     Orientation orientation = orientationService.createOrientation(body);
     return ResponseEntity.created(URI.create("/orientation/" + orientation.getId())).body(orientation);
+  }
+  @DeleteMapping("/{orientationId}")
+  public ResponseEntity<Void> deleteOrientation(@PathVariable Long orientationId) throws NotFoundException {
+    Optional<Orientation> orientation = orientationService.getOrientationById(orientationId);
+    if (!orientation.isPresent()) {
+      throw new NotFoundException("La Orientation(id): " + orientationId + " no existe.");
+    }
+    orientationService.deleteOrientation(orientation.get());
+    return ResponseEntity.noContent().build();
+  }
+
+  @PutMapping("/{orientationId}")
+  public ResponseEntity<Orientation> updateOrientation(@PathVariable Long orientationId, @RequestBody OrientationRequest orientationRequest)
+      throws NotFoundException {
+    Optional<Orientation> orientation = orientationService.getOrientationById(orientationId);
+    if (!orientation.isPresent()) {
+      throw new NotFoundException("La Orientation(id): " + orientationId + " no existe.");
+    }
+    OrientationBody body = OrientationBody.builder().name(orientationRequest.getName()).build();
+    Orientation updatedOrientation = orientationService.updateOrientation(orientation.get(), body);
+    return ResponseEntity.ok(updatedOrientation);
   }
 }

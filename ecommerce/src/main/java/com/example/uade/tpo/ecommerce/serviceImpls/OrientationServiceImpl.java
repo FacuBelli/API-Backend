@@ -4,11 +4,13 @@ import java.util.List;
 import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
+
 import org.springframework.stereotype.Service;
 
 import com.example.uade.tpo.ecommerce.dto.body.OrientationBody;
 import com.example.uade.tpo.ecommerce.entities.Orientation;
 import com.example.uade.tpo.ecommerce.exceptions.DuplicateException;
+import com.example.uade.tpo.ecommerce.exceptions.NotFoundException;
 import com.example.uade.tpo.ecommerce.repositories.OrientationRepository;
 import com.example.uade.tpo.ecommerce.services.OrientationService;
 
@@ -36,11 +38,17 @@ public class OrientationServiceImpl implements OrientationService {
     return orientationRepository.save(new Orientation(body));
   }
 
-  public Orientation updateOrientation(Orientation orientation, OrientationBody orientationBody) {
-    throw new UnsupportedOperationException("Unimplemented method 'updateOrientation'");
-  }
+  @Override
+    public Orientation updateOrientation(Orientation orientation, OrientationBody body) {
+        orientation.setName(body.getName());
+        return orientationRepository.save(orientation);
+    }
 
-  public void deleteOrientation(Orientation orientation) {
-    throw new UnsupportedOperationException("Unimplemented method 'deleteOrientation'");
-  }
+    @Override
+    public void deleteOrientation(Orientation orientation) throws NotFoundException {
+        if (!orientationRepository.existsById(orientation.getId())) {
+            throw new NotFoundException("La Orientation(id): " + orientation.getId() + " no existe.");
+        }
+        orientationRepository.delete(orientation);
+    }
 }
