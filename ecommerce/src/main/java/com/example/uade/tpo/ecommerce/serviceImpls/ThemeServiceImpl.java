@@ -11,6 +11,7 @@ import com.example.uade.tpo.ecommerce.services.ThemeService;
 import com.example.uade.tpo.ecommerce.dto.body.ThemeBody;
 import com.example.uade.tpo.ecommerce.entities.Theme;
 import com.example.uade.tpo.ecommerce.exceptions.DuplicateException;
+import com.example.uade.tpo.ecommerce.exceptions.NotFoundException;
 
 @Service
 public class ThemeServiceImpl implements ThemeService {
@@ -37,12 +38,21 @@ public class ThemeServiceImpl implements ThemeService {
   }
 
   @Override
-  public Theme updateTheme(Theme Theme, ThemeBody ThemeBody) {
-    throw new UnsupportedOperationException("Unimplemented method 'updateTheme'");
-  }
+    public void deleteTheme(Long themeId) throws NotFoundException {
+        if (!themeRepository.existsById(themeId)) {
+            throw new NotFoundException("El Theme(id): " + themeId + " no existe.");
+        }
+        themeRepository.deleteById(themeId);
+    }
 
-  @Override
-  public void deleteTheme(Theme Theme) {
-    throw new UnsupportedOperationException("Unimplemented method 'deleteTheme'");
-  }
+    @Override
+    public Theme updateTheme(Long themeId, ThemeBody body) throws NotFoundException {
+        Optional<Theme> themeOpt = themeRepository.findById(themeId);
+        if (!themeOpt.isPresent()) {
+            throw new NotFoundException("El Theme(id): " + themeId + " no existe.");
+        }
+        Theme theme = themeOpt.get();
+        theme.setName(body.getName());
+        return themeRepository.save(theme);
+    }
 }

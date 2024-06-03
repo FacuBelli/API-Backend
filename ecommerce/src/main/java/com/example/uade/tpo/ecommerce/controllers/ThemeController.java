@@ -6,9 +6,11 @@ import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
@@ -49,4 +51,18 @@ public class ThemeController {
     Theme theme = themeService.createTheme(body);
     return ResponseEntity.created(URI.create("/theme/" + theme.getId())).body(theme);
   }
+  @DeleteMapping("/{themeId}")
+  public ResponseEntity<Void> deleteTheme(@PathVariable Long themeId) throws NotFoundException {
+    themeService.deleteTheme(themeId);
+    return ResponseEntity.noContent().build();
+  }
+
+  @PutMapping("/{themeId}")
+  public ResponseEntity<Theme> updateTheme(@PathVariable Long themeId, @RequestBody ThemeRequest themeRequest)
+      throws NotFoundException {
+    ThemeBody body = ThemeBody.builder().name(themeRequest.getName()).build();
+    Theme updatedTheme = themeService.updateTheme(themeId, body);
+    return ResponseEntity.ok(updatedTheme);
+  }
 }
+
