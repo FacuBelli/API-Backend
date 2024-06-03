@@ -111,4 +111,8 @@ public class UserServiceImpl implements UserService {
   public User clearCart(User user) {
     return null;
   }
+
+  public User purchaseCart(User user) {
+    return null;
+  }
 }

@@ -32,4 +32,6 @@ public interface UserService {
   public User removeCartItem(User user, Artwork artwork) throws NotFoundException;
 
   public User clearCart(User user);
+
+  public User purchaseCart(User user);
 }
