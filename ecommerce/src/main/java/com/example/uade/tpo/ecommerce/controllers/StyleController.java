@@ -6,6 +6,7 @@ import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -19,6 +20,7 @@ import com.example.uade.tpo.ecommerce.entities.Style;
 import com.example.uade.tpo.ecommerce.exceptions.DuplicateException;
 import com.example.uade.tpo.ecommerce.exceptions.NotFoundException;
 import com.example.uade.tpo.ecommerce.services.StyleService;
+import org.springframework.web.bind.annotation.PutMapping;
 
 @RestController
 @RequestMapping("style")
@@ -46,5 +48,31 @@ public class StyleController {
     StyleBody body = StyleBody.builder().name(styleRequest.getName()).build();
     Style style = styleService.createStyle(body);
     return ResponseEntity.created(URI.create("/style/" + style.getId())).body(style);
+  }
+
+  @PutMapping("/{styleId}")
+  public ResponseEntity<Style> updateStyle(@PathVariable Long styleId, @RequestBody StyleRequest styleRequest)
+      throws NotFoundException {
+    Optional<Style> style = styleService.getStyleById(styleId);
+    if (!style.isPresent()) {
+      throw new NotFoundException("El Style(id): " + styleId + " no existe.");
+    }
+
+    StyleBody body = StyleBody.builder().name(styleRequest.getName()).build();
+    Style newStyle = styleService.updateStyle(style.get(), body);
+
+    return ResponseEntity.ok(newStyle);
+  }
+
+  @DeleteMapping("/{styleId}")
+  public ResponseEntity<Void> deleteStyle(@PathVariable Long styleId) throws NotFoundException {
+    Optional<Style> style = styleService.getStyleById(styleId);
+    if (!style.isPresent()) {
+      throw new NotFoundException("El Style(id): " + styleId + " no existe.");
+    }
+
+    styleService.deleteStyle(style.get());
+
+    return ResponseEntity.ok().build();
   }
 }
