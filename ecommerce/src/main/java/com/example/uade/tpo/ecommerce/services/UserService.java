@@ -27,11 +27,13 @@ public interface UserService {
 
   public User clearFavorites(User user);
 
-  public User addCartItem(User user, Artwork artwork);
+  public User addCartItem(User user, Artwork artwork, Integer quantity) throws DuplicateException, InvalidOperationException;
+
+  public User updateCartItem(User user, Artwork artwork, Integer quantity) throws NotFoundException, InvalidOperationException;
 
   public User removeCartItem(User user, Artwork artwork) throws NotFoundException;
 
   public User clearCart(User user);
 
-  public User purchaseCart(User user);
+  public User purchaseCart(User user) throws InvalidOperationException;
 }

@@ -1,5 +1,6 @@
 package com.example.uade.tpo.ecommerce.serviceImpls;
 
+import java.util.Iterator;
 import java.util.List;
 import java.util.Optional;
 import java.util.Set;
@@ -9,6 +10,7 @@ import org.springframework.stereotype.Service;
 
 import com.example.uade.tpo.ecommerce.dto.body.UserBody;
 import com.example.uade.tpo.ecommerce.entities.Artwork;
+import com.example.uade.tpo.ecommerce.entities.CartItem;
 import com.example.uade.tpo.ecommerce.entities.User;
 import com.example.uade.tpo.ecommerce.exceptions.DuplicateException;
 import com.example.uade.tpo.ecommerce.exceptions.InvalidOperationException;
@@ -40,7 +42,7 @@ public class UserServiceImpl implements UserService {
     if (body.getBiography() != null && !body.getBiography().equals(user.getBiography())) {
       user.setBiography(body.getBiography());
     }
-    
+
     if (body.getEmail() != null && !body.getEmail().equals(user.getEmail())) {
       user.setEmail(body.getEmail());
     }
@@ -71,8 +73,9 @@ public class UserServiceImpl implements UserService {
 
     Set<Artwork> userFavorites = user.getFavoriteArtworks();
     for (Artwork favorite : userFavorites) {
-      if (favorite.getId() == artwork.getId())
+      if (favorite.getId() == artwork.getId()) {
         throw new DuplicateException("Artwork ya incluido en favoritos.");
+      }
     }
 
     userFavorites.add(artwork);
@@ -100,19 +103,99 @@ public class UserServiceImpl implements UserService {
     return userRepository.save(user);
   }
 
-  public User addCartItem(User user, Artwork artwork) {
-    return null;
+  public User addCartItem(User user, Artwork artwork, Integer quantity)
+      throws DuplicateException, InvalidOperationException {
+    if (user.getId() == artwork.getArtist().getId()) {
+      throw new InvalidOperationException("El Artwork pertenece al User.");
+    }
+
+    Set<CartItem> cart = user.getCart();
+    for (CartItem cartItem : cart) {
+      if (cartItem.getArtwork().getId() == artwork.getId()) {
+        throw new DuplicateException("Artwork ya incluido en el cart.");
+      }
+    }
+
+    if (quantity > artwork.getStock()) {
+      throw new InvalidOperationException("Stock insuficiente. Stock: " + artwork.getStock() + " unidades.");
+    }
+
+    CartItem cartItem = new CartItem(user, artwork, quantity);
+    cart.add(cartItem);
+
+    return userRepository.save(user);
+  }
+
+  public User updateCartItem(User user, Artwork artwork, Integer quantity)
+      throws NotFoundException, InvalidOperationException {
+    Set<CartItem> cart = user.getCart();
+
+    CartItem cartItem = null;
+    for (CartItem item : cart) {
+      if (item.getArtwork().getId() == artwork.getId()) {
+        cartItem = item;
+        break;
+      }
+    }
+
+    if (cartItem == null) {
+      throw new NotFoundException("Artwork no incluido en el carrito.");
+    }
+
+    if (quantity > artwork.getStock()) {
+      throw new InvalidOperationException("Stock insuficiente. Stock: " + artwork.getStock() + " unidades.");
+    }
+
+    cartItem.setQuantity(quantity);
+
+    return userRepository.save(user);
   }
 
   public User removeCartItem(User user, Artwork artwork) throws NotFoundException {
-    return null;
+    Set<CartItem> cart = user.getCart();
+
+    CartItem cartItem = null;
+    for (CartItem item : cart) {
+      if (item.getArtwork().getId() == artwork.getId()) {
+        cartItem = item;
+        break;
+      }
+    }
+
+    if (cartItem == null) {
+      throw new NotFoundException("Artwork no incluido en el carrito.");
+    }
+
+    cart.remove(cartItem);
+
+    return userRepository.save(user);
   }
 
   public User clearCart(User user) {
-    return null;
+    Set<CartItem> cart = user.getCart();
+
+    cart.clear();
+
+    return userRepository.save(user);
   }
 
-  public User purchaseCart(User user) {
-    return null;
+  public User purchaseCart(User user) throws InvalidOperationException {
+    Set<CartItem> cart = user.getCart();
+    Set<CartItem> boughtArtworks = user.getBoughtArtworks();
+
+    Iterator<CartItem> iterator = cart.iterator();
+    while (iterator.hasNext()) {
+      CartItem cartItem = iterator.next();
+      Artwork artwork = cartItem.getArtwork();
+
+      if (cartItem.getQuantity() > artwork.getStock()) {
+        throw new InvalidOperationException("Stock insuficiente. Stock: " + artwork.getStock() + " unidades.");
+      }
+
+      boughtArtworks.add(cartItem);
+      cart.remove(cartItem);
+    }
+
+    return userRepository.save(user);
   }
 }

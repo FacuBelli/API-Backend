@@ -24,5 +24,14 @@ public class CartItem {
   private Artwork artwork;
 
   @Column
-  private int quantity;
+  private Integer quantity;
+
+  public CartItem() {
+  }
+
+  public CartItem(User user, Artwork artwork, Integer quantity) {
+    this.user = user;
+    this.artwork = artwork;
+    this.quantity = quantity;
+  }
 }

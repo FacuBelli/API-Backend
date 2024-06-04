@@ -49,12 +49,7 @@ public class User {
 
   @OneToMany(mappedBy = "artist", cascade = CascadeType.ALL)
   @JsonManagedReference
-  private Set<Artwork> artworks;
-
-  @ManyToMany
-  @JoinTable(inverseJoinColumns = { @JoinColumn(name = "bought_artwork_id") })
-  @JsonManagedReference
-  private Set<Artwork> boughtArtworks;
+  private Set<Artwork> createdArtworks;
 
   @ManyToMany
   @JoinTable(inverseJoinColumns = { @JoinColumn(name = "favorite_artwork_id") })
@@ -63,6 +58,9 @@ public class User {
 
   @OneToMany
   private Set<CartItem> cart;
+
+  @OneToMany
+  private Set<CartItem> boughtArtworks;
 
   public User() {
   }
