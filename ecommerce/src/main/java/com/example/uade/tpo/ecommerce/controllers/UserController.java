@@ -66,6 +66,38 @@ public class UserController {
     return ResponseEntity.created(URI.create("/user/" + user.getId())).body(user);
   }
 
+  @PutMapping("/{userId}")
+  public ResponseEntity<User> updateUser(@PathVariable Long userId, @RequestBody UserRequest userRequest) 
+      throws NotFoundException {
+    Optional<User> user = userService.getUserById(userId);
+    if (!user.isPresent()) {
+      throw new NotFoundException("El User(id): " + userId + " no existe.");
+    }
+
+    UserBody body = UserBody.builder()
+        .biography(userRequest.getBiography())
+        .email(userRequest.getEmail())
+        .firstName(userRequest.getFirstName())
+        .isArtist(userRequest.isArtist())
+        .lastName(userRequest.getLastName())
+        .password(userRequest.getPassword())
+        .build();
+    User updatedUser = userService.updateUser(user.get(), body);
+    return ResponseEntity.ok(updatedUser);
+  }
+
+  @DeleteMapping("/{userId}")
+  public ResponseEntity<Void> deleteUser(@PathVariable Long userId) throws NotFoundException {
+    Optional<User> user = userService.getUserById(userId);
+    if (!user.isPresent()) {
+      throw new NotFoundException("El User(id): " + userId + " no existe.");
+    }
+
+    userService.deleteUser(user.get());
+    return ResponseEntity.noContent().build();
+  }
+
+
   @PostMapping("/{userId}/favorite/{artworkId}")
   public ResponseEntity<User> addFavorite(@PathVariable Long userId, @PathVariable Long artworkId)
       throws DuplicateException, NotFoundException, InvalidOperationException {
