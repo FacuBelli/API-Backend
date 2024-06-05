@@ -19,4 +19,8 @@ public interface ArtworkService {
   public Artwork updateArtwork(Artwork artwork, ArtworkBody body);
 
   public void deleteArtwork(Artwork artwork);
+  
+  public void incrementStock(Artwork artwork, Integer amount);
+
+  public void decrementStock(Artwork artwork, Integer amount);
 }

@@ -11,5 +11,5 @@ import com.example.uade.tpo.ecommerce.entities.Artwork;
 @Repository
 public interface ArtworkRepository extends JpaRepository<Artwork, Long> {
   @Query(value = "select a from Artwork a where a.artist = ?1")
-  public List<Artwork> findByUserId(Long id);
+  public List<Artwork> findAllByUserId(Long id);
 }
