@@ -49,18 +49,12 @@ public class User {
 
   @OneToMany(mappedBy = "artist", cascade = CascadeType.ALL)
   @JsonManagedReference
-  private Set<Artwork> createdArtworks;
+  private Set<Artwork> created;
 
   @ManyToMany
   @JoinTable(inverseJoinColumns = { @JoinColumn(name = "favorite_artwork_id") })
   @JsonManagedReference
-  private Set<Artwork> favoriteArtworks;
-
-  @OneToMany
-  private Set<CartItem> cart;
-
-  @OneToMany
-  private Set<CartItem> boughtArtworks;
+  private Set<Artwork> favorites;
 
   public User() {
   }

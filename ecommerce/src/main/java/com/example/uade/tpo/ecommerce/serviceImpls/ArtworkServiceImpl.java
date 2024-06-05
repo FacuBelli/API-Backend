@@ -22,7 +22,7 @@ public class ArtworkServiceImpl implements ArtworkService {
   }
 
   public List<Artwork> getArtworksByUserId(Long id) {
-    return artworkRepository.findByUserId(id);
+    return artworkRepository.findAllByUserId(id);
   }
 
   public Optional<Artwork> getArtworkById(Long id) {
@@ -79,5 +79,17 @@ public class ArtworkServiceImpl implements ArtworkService {
 
   public void deleteArtwork(Artwork artwork) {
     artworkRepository.delete(artwork);
+  }
+
+  public void incrementStock(Artwork artwork, Integer amount) {
+    artwork.setStock(artwork.getStock() + amount);
+
+    artworkRepository.save(artwork);
+  }
+  
+  public void decrementStock(Artwork artwork, Integer amount) {
+    artwork.setStock(artwork.getStock() - amount);
+
+    artworkRepository.save(artwork);
   }
 }
