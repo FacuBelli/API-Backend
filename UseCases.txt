@@ -1,0 +1,101 @@
+Use Cases for ArtworkController, CategoryController, and UserController
+1. ArtworkController
+Controller Overview:
+ArtworkController manages artworks, including adding, retrieving, updating, and removing artworks from the user's cart.
+
+Use Cases:
+
+Create Artwork
+
+Request: POST /artwork
+Request Body: ArtworkRequest (contains artistId, description, image, price, title, stock, isHidden, categories, styles, themes, orientation)
+Response: HTTP 201 Created with location header pointing to the new artwork's URI.
+Get All Artworks
+
+Request: GET /artwork
+Response: HTTP 200 OK with a list of ArtworkBody.
+Get Artwork by ID
+
+Request: GET /artwork/{artworkId}
+Response: HTTP 200 OK with ArtworkBody.
+Add Artwork to Cart
+
+Request: POST /artwork/{userId}/cart/{artworkId}/{quantity}
+Response: HTTP 200 OK with updated User.
+Remove Artwork from Cart
+
+Request: DELETE /artwork/{userId}/cart/{artworkId}
+Response: HTTP 200 OK with updated User.
+Purchase Cart
+
+Request: POST /artwork/{userId}/cart/purchase
+Response: HTTP 200 OK with updated User.
+2. CategoryController
+Controller Overview:
+CategoryController manages categories related to artworks.
+
+Use Cases:
+
+Get All Categories
+
+Request: GET /category
+Response: HTTP 200 OK with a list of CategoryBody.
+Get Category by ID
+
+Request: GET /category/{categoryId}
+Response: HTTP 200 OK with CategoryBody.
+Create Category
+
+Request: POST /category
+Request Body: CategoryRequest (contains name, description)
+Response: HTTP 201 Created with location header pointing to the new category's URI.
+Update Category
+
+Request: PUT /category/{categoryId}
+Request Body: CategoryRequest (contains updated name, description)
+Response: HTTP 200 OK with updated CategoryBody.
+Delete Category
+
+Request: DELETE /category/{categoryId}
+Response: HTTP 204 No Content.
+3. UserController
+Controller Overview:
+UserController manages users, including registration, profile updates, and retrieving user details.
+
+Use Cases:
+
+Register User
+
+Request: POST /user
+Request Body: UserRequest (contains biography, email, password, firstName, lastName, isArtist)
+Response: HTTP 201 Created with location header pointing to the new user's URI.
+Get All Users
+
+Request: GET /user
+Response: HTTP 200 OK with a list of UserBody.
+Get User by ID
+
+Request: GET /user/{userId}
+Response: HTTP 200 OK with UserBody.
+Update User Profile
+
+Request: PUT /user/{userId}
+Request Body: UserRequest (contains updated biography, email, password, firstName, lastName, isArtist)
+Response: HTTP 200 OK with updated UserBody.
+Delete User
+
+Request: DELETE /user/{userId}
+Response: HTTP 204 No Content.
+
+Casos de Uso para OrientationController	
+El usuario realiza una solicitud GET a /orientation.
+El sistema devuelve un 200 OK con la lista de orientaciones.
+
+El usuario realiza una solicitud GET a /orientation/{orientationId}.
+El sistema verifica que la orientación existe.
+El sistema devuelve un 200 OK con los detalles de la orientación.
+
+El usuario realiza una solicitud POST a /orientation con los datos de la nueva orientación.
+El sistema verifica que el nombre de la orientación no exista.
+El sistema crea la nueva orientación.
+El sistema devuelve un 201 Created con la información de la orientación creada.
