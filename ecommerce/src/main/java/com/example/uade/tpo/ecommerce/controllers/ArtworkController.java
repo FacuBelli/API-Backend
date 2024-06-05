@@ -207,7 +207,7 @@ public class ArtworkController {
   }
 
   @DeleteMapping("/{artworkId}")
-  public ResponseEntity<Void> deleteArtwork(@RequestBody Long artworkId) throws NotFoundException {
+  public ResponseEntity<Void> deleteArtwork(@PathVariable Long artworkId) throws NotFoundException {
     Optional<Artwork> artwork = artworkService.getArtworkById(artworkId);
     if (!artwork.isPresent()) {
       throw new NotFoundException("El Artwork(id): " + artworkId + " no existe.");
