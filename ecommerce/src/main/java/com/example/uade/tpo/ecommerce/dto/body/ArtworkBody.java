@@ -35,4 +35,6 @@ public class ArtworkBody {
   private Set<Theme> themes;
 
   private Orientation orientation;
+
+  private Double discount;
 }

@@ -74,6 +74,9 @@ public class Artwork {
   @JoinColumn(name = "orientation_id", referencedColumnName = "id")
   private Orientation orientation;
 
+  @Column
+  private Double discount;
+
   public Artwork() {
   }
 
@@ -89,5 +92,6 @@ public class Artwork {
     this.styles = body.getStyles();
     this.themes = body.getThemes();
     this.orientation = body.getOrientation();
+    this.discount = body.getDiscount();
   }
 }

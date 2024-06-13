@@ -74,6 +74,10 @@ public class ArtworkServiceImpl implements ArtworkService {
       artwork.setTitle(body.getTitle());
     }
 
+    if (body.getDiscount() != null && !body.getDiscount().equals(artwork.getDiscount())) {
+      artwork.setDiscount(body.getDiscount());
+    }
+
     return artworkRepository.save(artwork);
   }
 

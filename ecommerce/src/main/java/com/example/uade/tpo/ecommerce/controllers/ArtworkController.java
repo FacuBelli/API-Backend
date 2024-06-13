@@ -78,8 +78,6 @@ public class ArtworkController {
       throw new NotFoundException("El Usuario(id): '" + artworkRequest.getArtistId() + "' no existe.");
     }
 
-    System.out.println(artworkRequest.toString());
-
     Set<Category> categories = new HashSet<Category>();
     if (artworkRequest.getCategories() != null)
       for (String categoryString : artworkRequest.getCategories()) {
@@ -127,6 +125,7 @@ public class ArtworkController {
         .styles(styles)
         .themes(themes)
         .title(artworkRequest.getTitle())
+        .discount(artworkRequest.getDiscount())
         .build();
 
     Artwork result = artworkService.createArtwork(body);

@@ -28,11 +28,14 @@ public class ArtworkRequest {
 
   private String orientation;
 
+  private double discount;
+
   public ArtworkRequest() {
   }
 
   public ArtworkRequest(Long artistId, String description, byte[] image, double price, String title, int stock,
-      boolean isHidden, Set<String> categories, Set<String> styles, Set<String> themes, String orientation) {
+      boolean isHidden, Set<String> categories, Set<String> styles, Set<String> themes, String orientation,
+      double discount) {
     this.artistId = artistId;
     this.description = description;
     this.image = image;
@@ -44,6 +47,7 @@ public class ArtworkRequest {
     this.styles = styles;
     this.themes = themes;
     this.orientation = orientation;
+    this.discount = discount;
   }
 
 }
