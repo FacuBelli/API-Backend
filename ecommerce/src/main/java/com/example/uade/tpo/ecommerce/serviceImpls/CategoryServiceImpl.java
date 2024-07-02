@@ -12,6 +12,8 @@ import com.example.uade.tpo.ecommerce.exceptions.DuplicateException;
 import com.example.uade.tpo.ecommerce.repositories.CategoryRepository;
 import com.example.uade.tpo.ecommerce.services.CategoryService;
 
+import jakarta.transaction.Transactional;
+
 @Service
 public class CategoryServiceImpl implements CategoryService {
   @Autowired
@@ -29,6 +31,7 @@ public class CategoryServiceImpl implements CategoryService {
     return categoryRepository.findByName(name);
   }
 
+  @Transactional
   public Category createCategory(CategoryBody body) throws DuplicateException {
     Optional<Category> category = categoryRepository.findByName(body.getName());
     if (category.isPresent()) {
