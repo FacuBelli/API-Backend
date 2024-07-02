@@ -1,7 +1,5 @@
 package com.example.uade.tpo.ecommerce.controllers.auth;
 
-import com.uade.tpo.demo.entity.Role;
-
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
@@ -13,9 +11,10 @@ import lombok.NoArgsConstructor;
 @NoArgsConstructor
 public class RegisterRequest {
 
-    private String firstname;
-    private String lastname;
-    private String email;
-    private String password;
-    private Role role;
+  private String biography;
+  private String firstName;
+  private String lastName;
+  private String email;
+  private String password;
+  private boolean isArtist;
 }

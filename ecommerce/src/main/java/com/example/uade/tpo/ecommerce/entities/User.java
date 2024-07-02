@@ -1,10 +1,16 @@
 package com.example.uade.tpo.ecommerce.entities;
 
+import java.util.Collection;
+import java.util.List;
 import java.util.Set;
 
 import org.hibernate.annotations.DynamicUpdate;
+import org.springframework.security.core.GrantedAuthority;
+import org.springframework.security.core.authority.SimpleGrantedAuthority;
+import org.springframework.security.core.userdetails.UserDetails;
 
 import com.example.uade.tpo.ecommerce.dto.body.UserBody;
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonManagedReference;
 
 import jakarta.persistence.CascadeType;
@@ -24,7 +30,7 @@ import lombok.Data;
 @Data
 @DynamicUpdate
 @Table(name = "users")
-public class User {
+public class User implements UserDetails {
   @Id
   @GeneratedValue(strategy = GenerationType.IDENTITY)
   private Long id;
@@ -35,6 +41,7 @@ public class User {
   @Column
   private String email;
 
+  @JsonIgnore
   @Column
   private String password;
 
@@ -66,5 +73,35 @@ public class User {
     this.firstName = body.getFirstName();
     this.lastName = body.getLastName();
     this.isArtist = body.isArtist();
+  }
+
+  @Override
+  public Collection<? extends GrantedAuthority> getAuthorities() {
+    return List.of(new SimpleGrantedAuthority(isArtist ? "Artist" : "User"));
+  }
+
+  @Override
+  public String getUsername() {
+    return email;
+  }
+
+  @Override
+  public boolean isAccountNonExpired() {
+    return true;
+  }
+
+  @Override
+  public boolean isAccountNonLocked() {
+    return true;
+  }
+
+  @Override
+  public boolean isCredentialsNonExpired() {
+    return true;
+  }
+
+  @Override
+  public boolean isEnabled() {
+    return true;
   }
 }
