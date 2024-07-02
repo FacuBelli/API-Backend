@@ -45,7 +45,7 @@ public class User {
   private String lastName;
 
   @Column
-  private boolean isArtist;
+  private Boolean isArtist;
 
   @OneToMany(mappedBy = "artist", cascade = CascadeType.ALL)
   @JsonManagedReference
