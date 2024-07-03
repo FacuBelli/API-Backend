@@ -8,6 +8,7 @@ import org.springframework.security.config.annotation.web.configuration.EnableWe
 import org.springframework.security.config.annotation.web.configurers.AbstractHttpConfigurer;
 import org.springframework.security.web.SecurityFilterChain;
 import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter;
+import org.springframework.web.cors.CorsConfigurationSource;
 
 import static org.springframework.security.config.http.SessionCreationPolicy.STATELESS;
 
@@ -17,8 +18,8 @@ import lombok.RequiredArgsConstructor;
 @EnableWebSecurity
 @RequiredArgsConstructor
 public class SecurityConfig {
-
   private final JwtAuthenticationFilter jwtAuthFilter;
+  private final CorsConfigurationSource corsConfigurationSource;
 
   @Bean
   public SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception {
@@ -29,6 +30,7 @@ public class SecurityConfig {
             .requestMatchers(request -> request.getMethod().equals("GET")).permitAll() // Allow all GET requests
             .anyRequest().authenticated() // Require authentication for all other requests
         )
+        .cors(cors -> cors.configurationSource(corsConfigurationSource)) // Configure CORS with the bean
         .sessionManagement(session -> session.sessionCreationPolicy(STATELESS))
         .addFilterBefore(jwtAuthFilter, UsernamePasswordAuthenticationFilter.class);
 
