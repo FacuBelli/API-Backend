@@ -75,7 +75,7 @@ public class User implements UserDetails {
     this.password = body.getPassword();
     this.firstName = body.getFirstName();
     this.lastName = body.getLastName();
-    this.isArtist = body.isArtist();
+    this.isArtist = body.getIsArtist();
   }
 
   @Override

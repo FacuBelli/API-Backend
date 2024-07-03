@@ -7,7 +7,10 @@ import java.util.Optional;
 import java.util.Set;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpHeaders;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.util.Base64Utils;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -215,5 +218,17 @@ public class ArtworkController {
     artworkService.deleteArtwork(artwork.get());
 
     return ResponseEntity.ok().build();
+  }
+
+  @GetMapping("/{artworkId}/image")
+  public ResponseEntity<byte[]> getArtworkImage(@PathVariable Long artworkId) {
+    String base64Image = artworkService.getImageAsBase64(artworkId);
+    if (base64Image != null) {
+      byte[] imageBytes = Base64Utils.decodeFromString(base64Image);
+      HttpHeaders headers = new HttpHeaders();
+      headers.add(HttpHeaders.CONTENT_TYPE, "image/jpeg"); // or the appropriate image type
+      return new ResponseEntity<>(imageBytes, headers, HttpStatus.OK);
+    }
+    return new ResponseEntity<>(HttpStatus.NOT_FOUND);
   }
 }

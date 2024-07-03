@@ -56,7 +56,7 @@ public class UserController {
         .biography(userRequest.getBiography())
         .email(userRequest.getEmail())
         .firstName(userRequest.getFirstName())
-        .isArtist(userRequest.isArtist())
+        .isArtist(userRequest.getIsArtist())
         .lastName(userRequest.getLastName())
         .password(userRequest.getPassword())
         .build();
@@ -71,15 +71,14 @@ public class UserController {
     if (!user.isPresent()) {
       throw new NotFoundException("El User(id): " + userId + " no existe.");
     }
-
     UserBody body = UserBody.builder()
-        .biography(userRequest.getBiography())
-        .email(userRequest.getEmail())
-        .firstName(userRequest.getFirstName())
-        .isArtist(userRequest.isArtist())
-        .lastName(userRequest.getLastName())
-        .password(userRequest.getPassword())
-        .build();
+    .biography(userRequest.getBiography())
+    .email(userRequest.getEmail())
+    .firstName(userRequest.getFirstName())
+    .isArtist(userRequest.getIsArtist())
+    .lastName(userRequest.getLastName())
+    .password(userRequest.getPassword())
+    .build();
     User updatedUser = userService.updateUser(user.get(), body);
     return ResponseEntity.ok(updatedUser);
   }

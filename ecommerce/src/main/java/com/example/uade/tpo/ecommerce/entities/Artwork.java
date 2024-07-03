@@ -5,6 +5,7 @@ import java.util.Set;
 import org.hibernate.annotations.DynamicUpdate;
 
 import com.example.uade.tpo.ecommerce.dto.body.ArtworkBody;
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonManagedReference;
 
 import jakarta.persistence.Column;
@@ -14,8 +15,10 @@ import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
 import jakarta.persistence.JoinColumn;
 import jakarta.persistence.JoinTable;
+import jakarta.persistence.Lob;
 import jakarta.persistence.ManyToMany;
 import jakarta.persistence.ManyToOne;
+import jakarta.persistence.Transient;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
 import lombok.ToString;
@@ -37,7 +40,10 @@ public class Artwork {
   @Column
   private String description;
 
-  @Column(columnDefinition = "IMAGE")
+  @Lob
+  @JsonIgnore
+  @Column
+  @Transient
   @ToString.Exclude
   private byte[] image;
 

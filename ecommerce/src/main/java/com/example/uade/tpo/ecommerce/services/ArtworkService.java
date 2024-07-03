@@ -23,4 +23,6 @@ public interface ArtworkService {
   public void incrementStock(Artwork artwork, Integer amount);
 
   public void decrementStock(Artwork artwork, Integer amount);
+
+  public String getImageAsBase64(Long id);
 }

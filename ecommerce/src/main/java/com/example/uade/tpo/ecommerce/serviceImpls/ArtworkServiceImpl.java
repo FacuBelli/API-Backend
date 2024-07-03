@@ -4,7 +4,9 @@ import java.util.List;
 import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.stereotype.Service;
+import org.springframework.util.Base64Utils;
 
 import com.example.uade.tpo.ecommerce.dto.body.ArtworkBody;
 import com.example.uade.tpo.ecommerce.entities.Artwork;
@@ -16,6 +18,9 @@ import com.example.uade.tpo.ecommerce.services.ArtworkService;
 public class ArtworkServiceImpl implements ArtworkService {
   @Autowired
   private ArtworkRepository artworkRepository;
+
+  @Autowired
+  private JdbcTemplate jdbcTemplate;
 
   public List<Artwork> getArtworks() {
     return artworkRepository.findAll();
@@ -90,10 +95,16 @@ public class ArtworkServiceImpl implements ArtworkService {
 
     artworkRepository.save(artwork);
   }
-  
+
   public void decrementStock(Artwork artwork, Integer amount) {
     artwork.setStock(artwork.getStock() - amount);
 
     artworkRepository.save(artwork);
+  }
+
+  public String getImageAsBase64(Long id) {
+    String sql = "SELECT image FROM Artwork WHERE id = ?";
+    byte[] image = jdbcTemplate.queryForObject(sql, new Object[]{id}, byte[].class);
+    return Base64Utils.encodeToString(image);
   }
 }

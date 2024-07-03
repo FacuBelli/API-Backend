@@ -16,5 +16,5 @@ public class UserBody {
   
   private String lastName;
   
-  private boolean isArtist;
+  private Boolean isArtist;
 }

@@ -57,6 +57,10 @@ public class UserServiceImpl implements UserService {
       user.setPassword(body.getPassword());
     }
 
+    if (body.getIsArtist() != null && !body.getIsArtist().equals(user.getIsArtist())) {
+      user.setIsArtist(body.getIsArtist());
+    }
+
     return userRepository.save(user);
   }
 

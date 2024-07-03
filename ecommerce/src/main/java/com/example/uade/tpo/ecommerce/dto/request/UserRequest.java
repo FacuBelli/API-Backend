@@ -14,13 +14,13 @@ public class UserRequest {
 
   private String lastName;
 
-  private boolean isArtist;
+  private Boolean isArtist;
 
   public UserRequest() {
   }
 
   public UserRequest(String biography, String email, String password, String firstName, String lastName,
-      boolean isArtist) {
+      Boolean isArtist) {
     this.biography = biography;
     this.email = email;
     this.password = password;
