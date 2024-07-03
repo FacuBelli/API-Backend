@@ -5,7 +5,6 @@ import java.util.Set;
 import org.hibernate.annotations.DynamicUpdate;
 
 import com.example.uade.tpo.ecommerce.dto.body.ArtworkBody;
-import com.fasterxml.jackson.annotation.JsonBackReference;
 import com.fasterxml.jackson.annotation.JsonManagedReference;
 
 import jakarta.persistence.Column;
@@ -31,11 +30,10 @@ public class Artwork {
 
   @ManyToOne
   @JoinColumn(name = "user_id", referencedColumnName = "id", nullable = false)
-  @JsonBackReference
   @ToString.Exclude
   @EqualsAndHashCode.Exclude
   private User artist;
-  
+
   @Column
   private String description;
 
@@ -45,13 +43,13 @@ public class Artwork {
 
   @Column
   private Double price;
-  
+
   @Column
   private String title;
-  
+
   @Column
   private Integer stock;
-  
+
   @Column
   private Boolean isHidden;
 
@@ -59,12 +57,12 @@ public class Artwork {
   @JoinTable
   @JsonManagedReference
   private Set<Category> categories;
-  
+
   @ManyToMany
   @JoinTable
   @JsonManagedReference
   private Set<Style> styles;
-  
+
   @ManyToMany
   @JoinTable
   @JsonManagedReference
