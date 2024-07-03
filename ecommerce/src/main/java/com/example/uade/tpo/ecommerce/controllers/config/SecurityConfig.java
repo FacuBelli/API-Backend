@@ -6,11 +6,10 @@ import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
 import org.springframework.security.config.annotation.web.configurers.AbstractHttpConfigurer;
+import org.springframework.security.config.http.SessionCreationPolicy;
 import org.springframework.security.web.SecurityFilterChain;
 import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter;
 import org.springframework.web.cors.CorsConfigurationSource;
-
-import static org.springframework.security.config.http.SessionCreationPolicy.STATELESS;
 
 import lombok.RequiredArgsConstructor;
 
@@ -24,15 +23,18 @@ public class SecurityConfig {
   @Bean
   public SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception {
     http
-        .csrf(AbstractHttpConfigurer::disable)
+        .csrf(AbstractHttpConfigurer::disable) // Disable CSRF protection if using stateless authentication
+        .cors(cors -> cors.configurationSource(corsConfigurationSource)) // Apply CORS settings
         .authorizeHttpRequests(authorize -> authorize
-            .requestMatchers("/auth/**").permitAll() // Allow all requests under /api/auth/
+            .requestMatchers("/auth/**").permitAll() // Allow all requests under /auth/
             .requestMatchers(request -> request.getMethod().equals("GET")).permitAll() // Allow all GET requests
             .anyRequest().authenticated() // Require authentication for all other requests
         )
-        .cors(cors -> cors.configurationSource(corsConfigurationSource)) // Configure CORS with the bean
-        .sessionManagement(session -> session.sessionCreationPolicy(STATELESS))
-        .addFilterBefore(jwtAuthFilter, UsernamePasswordAuthenticationFilter.class);
+        .sessionManagement(session -> session.sessionCreationPolicy(SessionCreationPolicy.STATELESS)) // Stateless
+                                                                                                      // session
+                                                                                                      // management
+        .addFilterBefore(jwtAuthFilter, UsernamePasswordAuthenticationFilter.class); // Add JWT filter before the
+                                                                                     // default authentication filter
 
     return http.build();
   }

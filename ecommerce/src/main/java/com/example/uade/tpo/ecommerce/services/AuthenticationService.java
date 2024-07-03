@@ -29,7 +29,7 @@ public class AuthenticationService {
         .email(request.getEmail())
         .password(passwordEncoder.encode(request.getPassword()))
         .firstName(request.getFirstName())
-        .firstName(request.getLastName())
+        .lastName(request.getLastName())
         .isArtist(request.isArtist())
         .build();
     

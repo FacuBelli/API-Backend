@@ -37,6 +37,11 @@ public class JwtAuthenticationFilter extends OncePerRequestFilter {
     // Log request method
     log.info("Request Method: {}", request.getMethod());
 
+    if (request.getRequestURI().startsWith("/auth/")) {
+      filterChain.doFilter(request, response);
+      return;
+    }
+
     if (request.getMethod().equals("GET")) {
       // Allow all GET requests without authentication
       filterChain.doFilter(request, response);
@@ -47,7 +52,7 @@ public class JwtAuthenticationFilter extends OncePerRequestFilter {
       // For non-GET requests without a valid JWT token, return unauthorized
       response.setStatus(HttpServletResponse.SC_UNAUTHORIZED);
       return;
-    }
+    } 
 
     jwt = authHeader.substring(7);
     userEmail = jwtService.extractUsername(jwt);
